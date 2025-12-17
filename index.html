@@ -2,10 +2,527 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio - Retro OS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'MS Sans Serif', Arial, sans-serif;
+            overflow: hidden;
+            background: #008080;
+            height: 100vh;
+        }
+
+        /* Desktop */
+        .desktop {
+            height: calc(100vh - 40px);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .icon {
+            width: 80px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .icon:active {
+            filter: brightness(1.2);
+        }
+
+        .icon-image {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 5px;
+            background: #c0c0c0;
+            border: 2px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .icon-label {
+            color: white;
+            font-size: 11px;
+            text-shadow: 1px 1px 2px #000;
+            word-wrap: break-word;
+        }
+
+        /* Window */
+        .window {
+            position: absolute;
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #dfdfdf #000 #000 #dfdfdf;
+            min-width: 400px;
+            min-height: 300px;
+            display: none;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .window.active {
+            display: block;
+            z-index: 100;
+        }
+
+        .title-bar {
+            background: linear-gradient(to right, #000080, #1084d0);
+            color: white;
+            padding: 3px 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .title-bar-buttons {
+            display: flex;
+            gap: 2px;
+        }
+
+        .title-bar-button {
+            width: 16px;
+            height: 14px;
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #fff #000 #000 #fff;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .title-bar-button:active {
+            border-color: #000 #fff #fff #000;
+        }
+
+        .window-content {
+            padding: 15px;
+            height: calc(100% - 25px);
+            overflow-y: auto;
+            background: white;
+        }
+
+        .project-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f0f0f0;
+            border: 1px solid #999;
+            cursor: pointer;
+        }
+
+        .project-item:hover {
+            background: #e0e0e0;
+        }
+
+        /* Taskbar */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: #c0c0c0;
+            border-top: 2px solid;
+            border-color: #fff #000 #000 #fff;
+            display: flex;
+            align-items: center;
+            padding: 2px;
+            gap: 5px;
+        }
+
+        .start-button {
+            height: 32px;
+            padding: 0 15px;
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #fff #000 #000 #fff;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+        }
+
+        .start-button:active {
+            border-color: #000 #fff #fff #000;
+        }
+
+        .start-button::before {
+            content: '⊞';
+            font-size: 20px;
+        }
+
+        .taskbar-divider {
+            width: 2px;
+            height: 32px;
+            background: linear-gradient(to right, #808080, #fff);
+        }
+
+        .taskbar-time {
+            margin-left: auto;
+            padding: 0 10px;
+            border: 1px inset;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+        }
+
+        .mode-toggle {
+            padding: 5px 10px;
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #fff #000 #000 #fff;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        /* Modern mode */
+        body.modern-mode {
+            background: #1a1a1a;
+            overflow-y: auto;
+        }
+
+        body.modern-mode .desktop,
+        body.modern-mode .taskbar {
+            display: none;
+        }
+
+        .modern-container {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            color: white;
+        }
+
+        body.modern-mode .modern-container {
+            display: block;
+        }
+
+        .modern-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .modern-header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            font-family: Arial, sans-serif;
+        }
+
+        .modern-section {
+            margin-bottom: 50px;
+        }
+
+        .modern-section h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .modern-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .modern-card {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+
+        .modern-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .modern-card h3 {
+            margin-bottom: 10px;
+            color: #4a9eff;
+        }
+
+        .toggle-fixed {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+    </style>
 </head>
 <body>
-<h1>Hello, world</h1>
-<p>If you can read this, GitHub Pages is working.XXX</p>
+<!-- Retro OS Mode -->
+<div class="desktop" id="desktop">
+    <!-- Icons -->
+    <div class="icon" onclick="openWindow('graphics-tech-art')">
+        <div class="icon-image">💻</div>
+        <div class="icon-label">Graphics/Tech Art</div>
+    </div>
+    <div class="icon" onclick="openWindow('game-design')">
+        <div class="icon-image">🎮</div>
+        <div class="icon-label">Game Design</div>
+    </div>
+    <div class="icon" onclick="openWindow('3d-art')">
+        <div class="icon-image">🎨</div>
+        <div class="icon-label">3D Art</div>
+    </div>
+</div>
+
+<!-- Windows -->
+<div class="window" id="window-graphics-tech-art" style="left: 100px; top: 100px;">
+    <div class="title-bar" onmousedown="dragStart(event, 'window-graphics-tech-art')">
+        <span>Graphics Programming / Technical Art</span>
+        <div class="title-bar-buttons">
+            <div class="title-bar-button" onclick="closeWindow('graphics-tech-art')">✕</div>
+        </div>
+    </div>
+    <div class="window-content">
+        <h3>Graphics Programming / Technical Art</h3>
+        <h4>C++ Graphics Projects</h4>
+        <div class="project-item">
+            <strong>Project 1:</strong> [Name]<br>
+            <small>Description, video demo, and GitHub link.</small>
+        </div>
+        <div class="project-item">
+            <strong>Project 2:</strong> [Name]<br>
+            <small>Description, video demo, and GitHub link.</small>
+        </div>
+        <h4 style="margin-top: 20px;">Unity Graphics Project</h4>
+        <div class="project-item">
+            <strong>Project:</strong> [Project Name]<br>
+            <small>Screenshots, video, and description of graphics techniques used.</small>
+        </div>
+    </div>
+</div>
+
+<div class="window" id="window-game-design" style="left: 150px; top: 150px;">
+    <div class="title-bar" onmousedown="dragStart(event, 'window-game-design')">
+        <span>Game Design</span>
+        <div class="title-bar-buttons">
+            <div class="title-bar-button" onclick="closeWindow('game-design')">✕</div>
+        </div>
+    </div>
+    <div class="window-content">
+        <h3>Game Design</h3>
+        <h4>Video Game</h4>
+        <div class="project-item">
+            <strong>Game:</strong> [Game Title]<br>
+            <small>Description, screenshots, and links to play/download.</small>
+        </div>
+        <h4 style="margin-top: 20px;">Board Games</h4>
+        <div class="project-item">
+            <strong>Board Game 1:</strong> [Title]<br>
+            <small>Rules, photos, and description.</small>
+        </div>
+        <div class="project-item">
+            <strong>Board Game 2:</strong> [Title]<br>
+            <small>Rules, photos, and description.</small>
+        </div>
+        <div class="project-item">
+            <strong>Board Game 3:</strong> [Title]<br>
+            <small>Rules, photos, and description.</small>
+        </div>
+    </div>
+</div>
+
+<div class="window" id="window-3d-art" style="left: 200px; top: 120px;">
+    <div class="title-bar" onmousedown="dragStart(event, 'window-3d-art')">
+        <span>3D Art</span>
+        <div class="title-bar-buttons">
+            <div class="title-bar-button" onclick="closeWindow('3d-art')">✕</div>
+        </div>
+    </div>
+    <div class="window-content">
+        <h3>3D Art</h3>
+        <h4>3D Modeled Scenes</h4>
+        <div class="project-item">
+            <strong>Scene 1:</strong> [Project Name]<br>
+            <small>Description, images, or Sketchfab embed.</small>
+        </div>
+        <div class="project-item">
+            <strong>Scene 2:</strong> [Project Name]<br>
+            <small>Description, images, or Sketchfab embed.</small>
+        </div>
+        <h4 style="margin-top: 20px;">3D Animations</h4>
+        <div class="project-item">
+            <strong>Animation 1:</strong> [Project Name]<br>
+            <small>Embed your animation videos here.</small>
+        </div>
+        <div class="project-item">
+            <strong>Animation 2:</strong> [Project Name]<br>
+            <small>Second animation project.</small>
+        </div>
+    </div>
+</div>
+
+<!-- Taskbar -->
+<div class="taskbar">
+    <div class="start-button">Start</div>
+    <div class="taskbar-divider"></div>
+    <div class="mode-toggle" onclick="toggleMode()">Switch to Modern View</div>
+    <div class="taskbar-time" id="time"></div>
+</div>
+
+<!-- Modern Mode -->
+<div class="modern-container">
+    <div class="toggle-fixed">
+        <div class="mode-toggle" onclick="toggleMode()">Switch to Retro View</div>
+    </div>
+
+    <div class="modern-header">
+        <h1>My Portfolio</h1>
+        <p>Game Developer | 3D Artist | Graphics Programmer</p>
+    </div>
+
+    <div class="modern-section">
+        <h2>Graphics Programming / Technical Art</h2>
+        <h3 style="margin-top: 30px; font-size: 24px;">C++ Graphics Projects</h3>
+        <div class="modern-grid">
+            <div class="modern-card">
+                <h3>C++ Project 1</h3>
+                <p>Description and demo.</p>
+            </div>
+            <div class="modern-card">
+                <h3>C++ Project 2</h3>
+                <p>Description and demo.</p>
+            </div>
+        </div>
+        <h3 style="margin-top: 30px; font-size: 24px;">Unity Graphics Project</h3>
+        <div class="modern-grid">
+            <div class="modern-card">
+                <h3>Unity Project</h3>
+                <p>Your Unity graphics project.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modern-section">
+        <h2>Game Design</h2>
+        <h3 style="margin-top: 30px; font-size: 24px;">Video Game</h3>
+        <div class="modern-grid">
+            <div class="modern-card">
+                <h3>Game Project</h3>
+                <p>Your video game project details.</p>
+            </div>
+        </div>
+        <h3 style="margin-top: 30px; font-size: 24px;">Board Games</h3>
+        <div class="modern-grid">
+            <div class="modern-card">
+                <h3>Board Game 1</h3>
+                <p>Description</p>
+            </div>
+            <div class="modern-card">
+                <h3>Board Game 2</h3>
+                <p>Description</p>
+            </div>
+            <div class="modern-card">
+                <h3>Board Game 3</h3>
+                <p>Description</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modern-section">
+        <h2>3D Art</h2>
+        <h3 style="margin-top: 30px; font-size: 24px;">3D Modeled Scenes</h3>
+        <div class="modern-grid">
+            <div class="modern-card">
+                <h3>Scene 1</h3>
+                <p>Description of your first 3D scene project.</p>
+            </div>
+            <div class="modern-card">
+                <h3>Scene 2</h3>
+                <p>Description of your second 3D scene project.</p>
+            </div>
+        </div>
+        <h3 style="margin-top: 30px; font-size: 24px;">3D Animations</h3>
+        <div class="modern-grid">
+            <div class="modern-card">
+                <h3>Animation 1</h3>
+                <p>Details about your first animation.</p>
+            </div>
+            <div class="modern-card">
+                <h3>Animation 2</h3>
+                <p>Details about your second animation.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Window dragging
+    let draggedElement = null;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    function dragStart(e, windowId) {
+        draggedElement = document.getElementById(windowId);
+        const rect = draggedElement.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
+
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', dragEnd);
+    }
+
+    function drag(e) {
+        if (draggedElement) {
+            draggedElement.style.left = (e.clientX - offsetX) + 'px';
+            draggedElement.style.top = (e.clientY - offsetY) + 'px';
+        }
+    }
+
+    function dragEnd() {
+        draggedElement = null;
+        document.removeEventListener('mousemove', drag);
+        document.removeEventListener('mouseup', dragEnd);
+    }
+
+    // Window management
+    function openWindow(type) {
+        const window = document.getElementById('window-' + type);
+        window.classList.add('active');
+    }
+
+    function closeWindow(type) {
+        const window = document.getElementById('window-' + type);
+        window.classList.remove('active');
+    }
+
+    // Mode toggle
+    function toggleMode() {
+        document.body.classList.toggle('modern-mode');
+    }
+
+    // Clock
+    function updateTime() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        document.getElementById('time').textContent = hours + ':' + minutes;
+    }
+    updateTime();
+    setInterval(updateTime, 60000);
+</script>
 </body>
 </html>
