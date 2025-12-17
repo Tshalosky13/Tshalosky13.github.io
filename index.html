@@ -64,14 +64,17 @@
             background: #c0c0c0;
             border: 2px solid;
             border-color: #dfdfdf #000 #000 #dfdfdf;
-            min-width: 400px;
-            min-height: 300px;
+            width: 600px;
+            height: 500px;
             display: none;
             box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            resize: both;
+            overflow: hidden;
         }
 
         .window.active {
-            display: block;
+            display: flex;
+            flex-direction: column;
             z-index: 100;
         }
 
@@ -113,9 +116,69 @@
 
         .window-content {
             padding: 15px;
-            height: calc(100% - 25px);
+            flex: 1;
             overflow-y: auto;
+            overflow-x: hidden;
             background: white;
+        }
+
+        .window-content::-webkit-scrollbar {
+            width: 16px;
+        }
+
+        .window-content::-webkit-scrollbar-track {
+            background: #c0c0c0;
+        }
+
+        .window-content::-webkit-scrollbar-thumb {
+            background: #808080;
+            border: 1px solid;
+            border-color: #dfdfdf #000 #000 #dfdfdf;
+        }
+
+        .window-content::-webkit-scrollbar-button {
+            background: #c0c0c0;
+            border: 1px solid;
+            border-color: #dfdfdf #000 #000 #dfdfdf;
+            height: 16px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: #c0c0c0;
+            border-bottom: 2px solid #808080;
+        }
+
+        .tab {
+            padding: 5px 15px;
+            background: #c0c0c0;
+            border: 2px solid;
+            border-color: #808080 #000 #000 #808080;
+            border-bottom: none;
+            cursor: pointer;
+            font-size: 11px;
+            margin-right: 2px;
+            position: relative;
+            top: 2px;
+        }
+
+        .tab.active {
+            background: white;
+            border-color: #dfdfdf #000 transparent #dfdfdf;
+            z-index: 1;
+        }
+
+        .tab:hover:not(.active) {
+            background: #d4d4d4;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         .project-item {
@@ -271,258 +334,356 @@
     </style>
 </head>
 <body>
-<!-- Retro OS Mode -->
-<div class="desktop" id="desktop">
-    <!-- Icons -->
-    <div class="icon" onclick="openWindow('graphics-tech-art')">
-        <div class="icon-image">💻</div>
-        <div class="icon-label">Graphics/Tech Art</div>
-    </div>
-    <div class="icon" onclick="openWindow('game-design')">
-        <div class="icon-image">🎮</div>
-        <div class="icon-label">Game Design</div>
-    </div>
-    <div class="icon" onclick="openWindow('3d-art')">
-        <div class="icon-image">🎨</div>
-        <div class="icon-label">3D Art</div>
-    </div>
-</div>
-
-<!-- Windows -->
-<div class="window" id="window-graphics-tech-art" style="left: 100px; top: 100px;">
-    <div class="title-bar" onmousedown="dragStart(event, 'window-graphics-tech-art')">
-        <span>Graphics Programming / Technical Art</span>
-        <div class="title-bar-buttons">
-            <div class="title-bar-button" onclick="closeWindow('graphics-tech-art')">✕</div>
+    <!-- Retro OS Mode -->
+    <div class="desktop" id="desktop">
+        <!-- Icons -->
+        <div class="icon" onclick="openWindow('graphics-tech-art')">
+            <div class="icon-image">💻</div>
+            <div class="icon-label">Graphics/Tech Art</div>
         </div>
-    </div>
-    <div class="window-content">
-        <h3>Graphics Programming / Technical Art</h3>
-        <h4>C++ Graphics Projects</h4>
-        <div class="project-item">
-            <strong>Project 1:</strong> [Name]<br>
-            <small>Description, video demo, and GitHub link.</small>
+        <div class="icon" onclick="openWindow('game-design')">
+            <div class="icon-image">🎮</div>
+            <div class="icon-label">Game Design</div>
         </div>
-        <div class="project-item">
-            <strong>Project 2:</strong> [Name]<br>
-            <small>Description, video demo, and GitHub link.</small>
+        <div class="icon" onclick="openWindow('3d-art')">
+            <div class="icon-image">🎨</div>
+            <div class="icon-label">3D Art</div>
         </div>
-        <h4 style="margin-top: 20px;">Unity Graphics Project</h4>
-        <div class="project-item">
-            <strong>Project:</strong> [Project Name]<br>
-            <small>Screenshots, video, and description of graphics techniques used.</small>
-        </div>
-    </div>
-</div>
-
-<div class="window" id="window-game-design" style="left: 150px; top: 150px;">
-    <div class="title-bar" onmousedown="dragStart(event, 'window-game-design')">
-        <span>Game Design</span>
-        <div class="title-bar-buttons">
-            <div class="title-bar-button" onclick="closeWindow('game-design')">✕</div>
-        </div>
-    </div>
-    <div class="window-content">
-        <h3>Game Design</h3>
-        <h4>Video Game</h4>
-        <div class="project-item">
-            <strong>Game:</strong> [Game Title]<br>
-            <small>Description, screenshots, and links to play/download.</small>
-        </div>
-        <h4 style="margin-top: 20px;">Board Games</h4>
-        <div class="project-item">
-            <strong>Board Game 1:</strong> [Title]<br>
-            <small>Rules, photos, and description.</small>
-        </div>
-        <div class="project-item">
-            <strong>Board Game 2:</strong> [Title]<br>
-            <small>Rules, photos, and description.</small>
-        </div>
-        <div class="project-item">
-            <strong>Board Game 3:</strong> [Title]<br>
-            <small>Rules, photos, and description.</small>
-        </div>
-    </div>
-</div>
-
-<div class="window" id="window-3d-art" style="left: 200px; top: 120px;">
-    <div class="title-bar" onmousedown="dragStart(event, 'window-3d-art')">
-        <span>3D Art</span>
-        <div class="title-bar-buttons">
-            <div class="title-bar-button" onclick="closeWindow('3d-art')">✕</div>
-        </div>
-    </div>
-    <div class="window-content">
-        <h3>3D Art</h3>
-        <h4>3D Modeled Scenes</h4>
-        <div class="project-item">
-            <strong>Scene 1:</strong> [Project Name]<br>
-            <small>Description, images, or Sketchfab embed.</small>
-        </div>
-        <div class="project-item">
-            <strong>Scene 2:</strong> [Project Name]<br>
-            <small>Description, images, or Sketchfab embed.</small>
-        </div>
-        <h4 style="margin-top: 20px;">3D Animations</h4>
-        <div class="project-item">
-            <strong>Animation 1:</strong> [Project Name]<br>
-            <small>Embed your animation videos here.</small>
-        </div>
-        <div class="project-item">
-            <strong>Animation 2:</strong> [Project Name]<br>
-            <small>Second animation project.</small>
-        </div>
-    </div>
-</div>
-
-<!-- Taskbar -->
-<div class="taskbar">
-    <div class="start-button">Start</div>
-    <div class="taskbar-divider"></div>
-    <div class="mode-toggle" onclick="toggleMode()">Switch to Modern View</div>
-    <div class="taskbar-time" id="time"></div>
-</div>
-
-<!-- Modern Mode -->
-<div class="modern-container">
-    <div class="toggle-fixed">
-        <div class="mode-toggle" onclick="toggleMode()">Switch to Retro View</div>
     </div>
 
-    <div class="modern-header">
-        <h1>My Portfolio</h1>
-        <p>Game Developer | 3D Artist | Graphics Programmer</p>
-    </div>
-
-    <div class="modern-section">
-        <h2>Graphics Programming / Technical Art</h2>
-        <h3 style="margin-top: 30px; font-size: 24px;">C++ Graphics Projects</h3>
-        <div class="modern-grid">
-            <div class="modern-card">
-                <h3>C++ Project 1</h3>
-                <p>Description and demo.</p>
-            </div>
-            <div class="modern-card">
-                <h3>C++ Project 2</h3>
-                <p>Description and demo.</p>
+    <!-- Windows -->
+    <div class="window" id="window-graphics-tech-art" style="left: 100px; top: 100px;">
+        <div class="title-bar" onmousedown="dragStart(event, 'window-graphics-tech-art')">
+            <span>Graphics Programming / Technical Art</span>
+            <div class="title-bar-buttons">
+                <div class="title-bar-button" onclick="closeWindow('graphics-tech-art')">✕</div>
             </div>
         </div>
-        <h3 style="margin-top: 30px; font-size: 24px;">Unity Graphics Project</h3>
-        <div class="modern-grid">
-            <div class="modern-card">
-                <h3>Unity Project</h3>
-                <p>Your Unity graphics project.</p>
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab(event, 'graphics-tech-art', 'cpp')">C++ Projects</div>
+            <div class="tab" onclick="switchTab(event, 'graphics-tech-art', 'unity')">Unity Project</div>
+        </div>
+        <div class="window-content">
+            <div class="tab-content active" id="graphics-tech-art-cpp">
+                <h3>C++ Graphics Projects</h3>
+                <div class="project-item">
+                    <strong>Project 1:</strong> [Name]<br>
+                    <small>Description, video demo, and GitHub link.</small>
+                </div>
+                <div class="project-item">
+                    <strong>Project 2:</strong> [Name]<br>
+                    <small>Description, video demo, and GitHub link.</small>
+                </div>
+            </div>
+            <div class="tab-content" id="graphics-tech-art-unity">
+                <h3>Unity Graphics Project</h3>
+                <div class="project-item">
+                    <strong>Project:</strong> [Project Name]<br>
+                    <small>Description of graphics techniques used</small><br><br>
+                    <!-- Screenshot Gallery -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 10px 0;">
+                        <img src="path/to/unity-screenshot1.jpg" style="width: 100%;">
+                        <img src="path/to/unity-screenshot2.jpg" style="width: 100%;">
+                        <img src="path/to/unity-screenshot3.jpg" style="width: 100%;">
+                        <img src="path/to/unity-screenshot4.jpg" style="width: 100%;">
+                    </div>
+                    <a href="https://github.com/YOUR_USERNAME/YOUR_REPO" target="_blank">
+                        <button style="padding: 8px 16px;">View on GitHub</button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="modern-section">
-        <h2>Game Design</h2>
-        <h3 style="margin-top: 30px; font-size: 24px;">Video Game</h3>
-        <div class="modern-grid">
-            <div class="modern-card">
-                <h3>Game Project</h3>
-                <p>Your video game project details.</p>
+    <div class="window" id="window-game-design" style="left: 150px; top: 150px;">
+        <div class="title-bar" onmousedown="dragStart(event, 'window-game-design')">
+            <span>Game Design</span>
+            <div class="title-bar-buttons">
+                <div class="title-bar-button" onclick="closeWindow('game-design')">✕</div>
             </div>
         </div>
-        <h3 style="margin-top: 30px; font-size: 24px;">Board Games</h3>
-        <div class="modern-grid">
-            <div class="modern-card">
-                <h3>Board Game 1</h3>
-                <p>Description</p>
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab(event, 'game-design', 'video-game')">Video Game</div>
+            <div class="tab" onclick="switchTab(event, 'game-design', 'board-games')">Board Games</div>
+        </div>
+        <div class="window-content">
+            <div class="tab-content active" id="game-design-video-game">
+                <h3>Video Game</h3>
+                <div class="project-item">
+                    <strong>Game:</strong> [Game Title]<br>
+                    <small>Description here</small><br><br>
+                    <!-- Screenshots -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 10px;">
+                        <img src="path/to/screenshot1.jpg" style="width: 100%;">
+                        <img src="path/to/screenshot2.jpg" style="width: 100%;">
+                    </div>
+                    <a href="https://YOUR_USERNAME.itch.io/YOUR_GAME" target="_blank">
+                        <button style="padding: 8px 16px; margin-right: 10px;">Play on itch.io</button>
+                    </a>
+                    <button style="padding: 8px 16px;">Download (Windows)</button>
+                </div>
             </div>
-            <div class="modern-card">
-                <h3>Board Game 2</h3>
-                <p>Description</p>
-            </div>
-            <div class="modern-card">
-                <h3>Board Game 3</h3>
-                <p>Description</p>
+            <div class="tab-content" id="game-design-board-games">
+                <h3>Board Games</h3>
+                <div class="project-item">
+                    <strong>Board Game 1:</strong> [Title]<br>
+                    <small>Brief description</small><br><br>
+                    <!-- Photo Gallery -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0;">
+                        <img src="path/to/bg1-photo1.jpg" style="width: 100%;">
+                        <img src="path/to/bg1-photo2.jpg" style="width: 100%;">
+                        <img src="path/to/bg1-photo3.jpg" style="width: 100%;">
+                    </div>
+                    <button style="padding: 5px 10px; margin-right: 10px;">View Rules (PDF)</button>
+                    <button style="padding: 5px 10px;">Design Journal (PDF)</button>
+                </div>
+                <div class="project-item">
+                    <strong>Board Game 2:</strong> [Title]<br>
+                    <small>Brief description</small><br><br>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0;">
+                        <img src="path/to/bg2-photo1.jpg" style="width: 100%;">
+                        <img src="path/to/bg2-photo2.jpg" style="width: 100%;">
+                        <img src="path/to/bg2-photo3.jpg" style="width: 100%;">
+                    </div>
+                    <button style="padding: 5px 10px; margin-right: 10px;">View Rules (PDF)</button>
+                    <button style="padding: 5px 10px;">Design Journal (PDF)</button>
+                </div>
+                <div class="project-item">
+                    <strong>Board Game 3:</strong> [Title]<br>
+                    <small>Brief description</small><br><br>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0;">
+                        <img src="path/to/bg3-photo1.jpg" style="width: 100%;">
+                        <img src="path/to/bg3-photo2.jpg" style="width: 100%;">
+                        <img src="path/to/bg3-photo3.jpg" style="width: 100%;">
+                    </div>
+                    <button style="padding: 5px 10px; margin-right: 10px;">View Rules (PDF)</button>
+                    <button style="padding: 5px 10px;">Design Journal (PDF)</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="modern-section">
-        <h2>3D Art</h2>
-        <h3 style="margin-top: 30px; font-size: 24px;">3D Modeled Scenes</h3>
-        <div class="modern-grid">
-            <div class="modern-card">
-                <h3>Scene 1</h3>
-                <p>Description of your first 3D scene project.</p>
-            </div>
-            <div class="modern-card">
-                <h3>Scene 2</h3>
-                <p>Description of your second 3D scene project.</p>
+    <div class="window" id="window-3d-art" style="left: 200px; top: 120px;">
+        <div class="title-bar" onmousedown="dragStart(event, 'window-3d-art')">
+            <span>3D Art</span>
+            <div class="title-bar-buttons">
+                <div class="title-bar-button" onclick="closeWindow('3d-art')">✕</div>
             </div>
         </div>
-        <h3 style="margin-top: 30px; font-size: 24px;">3D Animations</h3>
-        <div class="modern-grid">
-            <div class="modern-card">
-                <h3>Animation 1</h3>
-                <p>Details about your first animation.</p>
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab(event, '3d-art', 'scenes')">3D Scenes</div>
+            <div class="tab" onclick="switchTab(event, '3d-art', 'animations')">Animations</div>
+        </div>
+        <div class="window-content">
+            <div class="tab-content active" id="3d-art-scenes">
+                <h3>3D Modeled Scenes</h3>
+                <div class="project-item">
+                    <strong>Scene 1:</strong> [Project Name]<br>
+                    <small>Description here</small><br><br>
+                    <!-- Sketchfab Embed -->
+                    <iframe src="https://sketchfab.com/models/YOUR_MODEL_ID/embed" width="100%" height="400" frameborder="0"></iframe>
+                    <br><br>
+                    <!-- Video -->
+                    <video controls width="100%" style="max-width: 640px;">
+                        <source src="path/to/scene1-video.mp4" type="video/mp4">
+                    </video>
+                    <br>
+                    <button style="margin-top: 10px; padding: 5px 10px;">Download Scene Files</button>
+                </div>
+                <div class="project-item">
+                    <strong>Scene 2:</strong> [Project Name]<br>
+                    <small>Description here</small><br><br>
+                    <!-- Sketchfab Embed -->
+                    <iframe src="https://sketchfab.com/models/YOUR_MODEL_ID/embed" width="100%" height="400" frameborder="0"></iframe>
+                    <br>
+                    <!-- Image Gallery -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
+                        <img src="path/to/scene2-img1.jpg" style="width: 100%;">
+                        <img src="path/to/scene2-img2.jpg" style="width: 100%;">
+                    </div>
+                    <br>
+                    <button style="margin-top: 10px; padding: 5px 10px;">Download Scene Files</button>
+                </div>
             </div>
-            <div class="modern-card">
-                <h3>Animation 2</h3>
-                <p>Details about your second animation.</p>
+            <div class="tab-content" id="3d-art-animations">
+                <h3>3D Animations</h3>
+                <div class="project-item">
+                    <strong>Animation 1:</strong> [Project Name]<br>
+                    <small>Description here</small><br><br>
+                    <!-- YouTube Embed -->
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="project-item">
+                    <strong>Animation 2:</strong> [Project Name]<br>
+                    <small>Description here</small><br><br>
+                    <!-- YouTube Embed -->
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    // Window dragging
-    let draggedElement = null;
-    let offsetX = 0;
-    let offsetY = 0;
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="start-button">Start</div>
+        <div class="taskbar-divider"></div>
+        <div class="mode-toggle" onclick="toggleMode()">Switch to Modern View</div>
+        <div class="taskbar-time" id="time"></div>
+    </div>
 
-    function dragStart(e, windowId) {
-        draggedElement = document.getElementById(windowId);
-        const rect = draggedElement.getBoundingClientRect();
-        offsetX = e.clientX - rect.left;
-        offsetY = e.clientY - rect.top;
+    <!-- Modern Mode -->
+    <div class="modern-container">
+        <div class="toggle-fixed">
+            <div class="mode-toggle" onclick="toggleMode()">Switch to Retro View</div>
+        </div>
+        
+        <div class="modern-header">
+            <h1>My Portfolio</h1>
+            <p>Game Developer | 3D Artist | Graphics Programmer</p>
+        </div>
 
-        document.addEventListener('mousemove', drag);
-        document.addEventListener('mouseup', dragEnd);
-    }
+        <div class="modern-section">
+            <h2>Graphics Programming / Technical Art</h2>
+            <h3 style="margin-top: 30px; font-size: 24px;">C++ Graphics Projects</h3>
+            <div class="modern-grid">
+                <div class="modern-card">
+                    <h3>C++ Project 1</h3>
+                    <p>Description and demo.</p>
+                </div>
+                <div class="modern-card">
+                    <h3>C++ Project 2</h3>
+                    <p>Description and demo.</p>
+                </div>
+            </div>
+            <h3 style="margin-top: 30px; font-size: 24px;">Unity Graphics Project</h3>
+            <div class="modern-grid">
+                <div class="modern-card">
+                    <h3>Unity Project</h3>
+                    <p>Your Unity graphics project.</p>
+                </div>
+            </div>
+        </div>
 
-    function drag(e) {
-        if (draggedElement) {
-            draggedElement.style.left = (e.clientX - offsetX) + 'px';
-            draggedElement.style.top = (e.clientY - offsetY) + 'px';
+        <div class="modern-section">
+            <h2>Game Design</h2>
+            <h3 style="margin-top: 30px; font-size: 24px;">Video Game</h3>
+            <div class="modern-grid">
+                <div class="modern-card">
+                    <h3>Game Project</h3>
+                    <p>Your video game project details.</p>
+                </div>
+            </div>
+            <h3 style="margin-top: 30px; font-size: 24px;">Board Games</h3>
+            <div class="modern-grid">
+                <div class="modern-card">
+                    <h3>Board Game 1</h3>
+                    <p>Description</p>
+                </div>
+                <div class="modern-card">
+                    <h3>Board Game 2</h3>
+                    <p>Description</p>
+                </div>
+                <div class="modern-card">
+                    <h3>Board Game 3</h3>
+                    <p>Description</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="modern-section">
+            <h2>3D Art</h2>
+            <h3 style="margin-top: 30px; font-size: 24px;">3D Modeled Scenes</h3>
+            <div class="modern-grid">
+                <div class="modern-card">
+                    <h3>Scene 1</h3>
+                    <p>Description of your first 3D scene project.</p>
+                </div>
+                <div class="modern-card">
+                    <h3>Scene 2</h3>
+                    <p>Description of your second 3D scene project.</p>
+                </div>
+            </div>
+            <h3 style="margin-top: 30px; font-size: 24px;">3D Animations</h3>
+            <div class="modern-grid">
+                <div class="modern-card">
+                    <h3>Animation 1</h3>
+                    <p>Details about your first animation.</p>
+                </div>
+                <div class="modern-card">
+                    <h3>Animation 2</h3>
+                    <p>Details about your second animation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Window dragging
+        let draggedElement = null;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        function dragStart(e, windowId) {
+            draggedElement = document.getElementById(windowId);
+            const rect = draggedElement.getBoundingClientRect();
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+            
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', dragEnd);
         }
-    }
 
-    function dragEnd() {
-        draggedElement = null;
-        document.removeEventListener('mousemove', drag);
-        document.removeEventListener('mouseup', dragEnd);
-    }
+        function drag(e) {
+            if (draggedElement) {
+                draggedElement.style.left = (e.clientX - offsetX) + 'px';
+                draggedElement.style.top = (e.clientY - offsetY) + 'px';
+            }
+        }
 
-    // Window management
-    function openWindow(type) {
-        const window = document.getElementById('window-' + type);
-        window.classList.add('active');
-    }
+        function dragEnd() {
+            draggedElement = null;
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', dragEnd);
+        }
 
-    function closeWindow(type) {
-        const window = document.getElementById('window-' + type);
-        window.classList.remove('active');
-    }
+        // Window management
+        function openWindow(type) {
+            const window = document.getElementById('window-' + type);
+            window.classList.add('active');
+        }
 
-    // Mode toggle
-    function toggleMode() {
-        document.body.classList.toggle('modern-mode');
-    }
+        function closeWindow(type) {
+            const window = document.getElementById('window-' + type);
+            window.classList.remove('active');
+        }
 
-    // Clock
-    function updateTime() {
-        const now = new Date();
-        const hours = now.getHours().toString().padStart(2, '0');
-        const minutes = now.getMinutes().toString().padStart(2, '0');
-        document.getElementById('time').textContent = hours + ':' + minutes;
-    }
-    updateTime();
-    setInterval(updateTime, 60000);
-</script>
+        // Mode toggle
+        function toggleMode() {
+            document.body.classList.toggle('modern-mode');
+        }
+
+        // Clock
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('time').textContent = hours + ':' + minutes;
+        }
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Tab switching
+        function switchTab(event, windowId, tabId) {
+            const window = document.getElementById('window-' + windowId);
+            const tabs = window.querySelectorAll('.tab');
+            const contents = window.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(windowId + '-' + tabId).classList.add('active');
+        }
+    </script>
 </body>
 </html>
