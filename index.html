@@ -1,393 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="path/to/your/image.png" type="image/png">
-    <title>Thomas Shalosky Portfolio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="path/to/your/image.png" type="image/png">
+        <title>Thomas Shalosky Portfolio</title>
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body>
+    <!-- Settings Icon -->
+    <div class="settings-icon" onclick="openWindow('settings')" title="Settings">⚙️</div>
 
-        body {
-            font-family: 'MS Sans Serif', Arial, sans-serif;
-            overflow: hidden;
-            background: #008080;
-            height: 100vh;
-        }
+    <!-- Particle Container -->
+    <div class="particles" id="particles"></div>
 
-        /* Desktop */
-        .desktop {
-            height: calc(100vh - 40px);
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 20px;
-        }
-
-        .icon {
-            width: 80px;
-            text-align: center;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .icon:active {
-            filter: brightness(1.2);
-        }
-
-        .icon-image {
-            width: 48px;
-            height: 48px;
-            margin: 0 auto 5px;
-            background: #c0c0c0;
-            border: 2px solid #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-
-        .icon-label {
-            color: white;
-            font-size: 11px;
-            text-shadow: 1px 1px 2px #000;
-            word-wrap: break-word;
-        }
-
-        /* Window */
-        .window {
-            position: absolute;
-            background: #c0c0c0;
-            border: 2px solid;
-            border-color: #dfdfdf #000 #000 #dfdfdf;
-            width: 600px;
-            height: 500px;
-            display: none;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-            resize: both;
-            overflow: hidden;
-        }
-
-        .window.active {
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-        }
-
-        .title-bar {
-            background: linear-gradient(to right, #000080, #1084d0);
-            color: white;
-            padding: 3px 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: move;
-            font-weight: bold;
-            font-size: 12px;
-        }
-
-        .title-bar-buttons {
-            display: flex;
-            gap: 2px;
-        }
-
-        .title-bar-button {
-            width: 16px;
-            height: 14px;
-            background: #c0c0c0;
-            border: 1px solid;
-            border-color: #fff #000 #000 #fff;
-            font-size: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-weight: bold;
-            color: #000;
-        }
-
-        .title-bar-button:active {
-            border-color: #000 #fff #fff #000;
-        }
-
-        .window-content {
-            padding: 15px;
-            flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
-            background: white;
-        }
-
-        .window-content::-webkit-scrollbar {
-            width: 16px;
-        }
-
-        .window-content::-webkit-scrollbar-track {
-            background: #c0c0c0;
-        }
-
-        .window-content::-webkit-scrollbar-thumb {
-            background: #808080;
-            border: 1px solid;
-            border-color: #dfdfdf #000 #000 #dfdfdf;
-        }
-
-        .window-content::-webkit-scrollbar-button {
-            background: #c0c0c0;
-            border: 1px solid;
-            border-color: #dfdfdf #000 #000 #dfdfdf;
-            height: 16px;
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            background: #c0c0c0;
-            border-bottom: 2px solid #808080;
-        }
-
-        .tab {
-            padding: 5px 15px;
-            background: #c0c0c0;
-            border: 2px solid;
-            border-color: #808080 #000 #000 #808080;
-            border-bottom: none;
-            cursor: pointer;
-            font-size: 11px;
-            margin-right: 2px;
-            position: relative;
-            top: 2px;
-        }
-
-        .tab.active {
-            background: white;
-            border-color: #dfdfdf #000 transparent #dfdfdf;
-            z-index: 1;
-        }
-
-        .tab:hover:not(.active) {
-            background: #d4d4d4;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .project-item {
-            padding: 10px;
-            margin: 5px 0;
-            background: #f0f0f0;
-            border: 1px solid #999;
-            cursor: pointer;
-        }
-
-        .project-item:hover {
-            background: #e0e0e0;
-        }
-
-        /* Taskbar */
-        .taskbar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 40px;
-            background: #c0c0c0;
-            border-top: 2px solid;
-            border-color: #fff #000 #000 #fff;
-            display: flex;
-            align-items: center;
-            padding: 2px;
-            gap: 5px;
-        }
-
-        .start-button {
-            height: 32px;
-            padding: 0 15px;
-            background: #c0c0c0;
-            border: 2px solid;
-            border-color: #fff #000 #000 #fff;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 13px;
-        }
-
-        .start-button:active {
-            border-color: #000 #fff #fff #000;
-        }
-
-        .start-button::before {
-            content: '⊞';
-            font-size: 20px;
-        }
-
-        .taskbar-divider {
-            width: 2px;
-            height: 32px;
-            background: linear-gradient(to right, #808080, #fff);
-        }
-
-        .taskbar-time {
-            margin-left: auto;
-            padding: 0 10px;
-            border: 1px inset;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            font-size: 11px;
-        }
-
-        .music-icon {
-            padding: 0 10px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .music-icon:hover {
-            background: #d4d4d4;
-        }
-
-        .mode-toggle {
-            padding: 5px 10px;
-            background: #c0c0c0;
-            border: 2px solid;
-            border-color: #fff #000 #000 #fff;
-            cursor: pointer;
-            font-size: 11px;
-        }
-
-        /* Modern mode */
-        body.modern-mode {
-            background: #1a1a1a;
-            overflow-y: auto;
-        }
-
-        body.modern-mode .desktop,
-        body.modern-mode .taskbar {
-            display: none;
-        }
-
-        .modern-container {
-            display: none;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            color: white;
-        }
-
-        body.modern-mode .modern-container {
-            display: block;
-        }
-
-        .modern-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .modern-header h1 {
-            font-size: 48px;
-            margin-bottom: 10px;
-            font-family: Arial, sans-serif;
-        }
-
-        .modern-section {
-            margin-bottom: 50px;
-        }
-
-        .modern-section h2 {
-            font-size: 32px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-        }
-
-        .modern-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .modern-card {
-            background: #2a2a2a;
-            padding: 20px;
-            border-radius: 8px;
-            transition: transform 0.2s;
-        }
-
-        .modern-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .modern-card h3 {
-            margin-bottom: 10px;
-            color: #4a9eff;
-        }
-
-        .toggle-fixed {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-
-        /* Spotify Player */
-        .spotify-player {
-            position: absolute;
-            left: auto;
-            top: auto;
-            z-index: 50;
-            background: #c0c0c0;
-            border: 2px solid;
-            border-color: #dfdfdf #000 #000 #dfdfdf;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-        }
-
-        .spotify-player.minimized .spotify-content {
-            display: none;
-        }
-
-        .spotify-title-bar {
-            background: linear-gradient(to right, #000080, #1084d0);
-            color: white;
-            padding: 3px 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: move;
-            font-weight: bold;
-            font-size: 12px;
-        }
-
-        .spotify-content {
-            padding: 3px;
-        }
-
-        body.modern-mode .spotify-player {
-            display: none;
-        }
-
-        body.modern-mode .window {
-            display: none !important;
-        }
-    </style>
-</head>
-<body>
     <!-- Retro OS Mode -->
     <div class="desktop" id="desktop">
         <!-- Icons -->
@@ -413,7 +39,67 @@
         </div>
     </div>
 
-    <!-- Windows -->
+    <!-- Settings Window -->
+    <div class="window" id="window-settings" style="left: 300px; top: 100px; width: 500px; height: 450px;">
+        <div class="title-bar" onmousedown="dragStart(event, 'window-settings')">
+            <span>⚙️ Settings</span>
+            <div class="title-bar-buttons">
+                <div class="title-bar-button" onclick="closeWindow('settings')">✕</div>
+            </div>
+        </div>
+        <div class="window-content">
+            <h3>Holiday Theme Settings</h3>
+
+            <div class="setting-group">
+                <h4>Theme Mode</h4>
+                <div class="radio-group">
+                    <input type="radio" id="auto" name="themeMode" value="auto" checked onchange="updateThemeMode()">
+                    <label for="auto">Automatic (based on date)</label>
+                </div>
+                <div class="radio-group">
+                    <input type="radio" id="manual" name="themeMode" value="manual" onchange="updateThemeMode()">
+                    <label for="manual">Manual Selection</label>
+                </div>
+                <div class="radio-group">
+                    <input type="radio" id="off" name="themeMode" value="off" onchange="updateThemeMode()">
+                    <label for="off">Themes Disabled</label>
+                </div>
+            </div>
+
+            <div class="setting-group" id="manualThemeSelect" style="display: none;">
+                <h4>Select Theme</h4>
+                <select id="themeSelector" onchange="applyManualTheme()">
+                    <option value="none">Default (No Theme)</option>
+                    <option value="halloween">🎃 Halloween</option>
+                    <option value="thanksgiving">🦃 Thanksgiving</option>
+                    <option value="winter">❄️ Winter/Christmas</option>
+                    <option value="valentine">💝 Valentine's Day</option>
+                    <option value="stpatrick">🍀 St. Patrick's Day</option>
+                    <option value="birthday">🎂 Birthday</option>
+                    <option value="july4th">🎆 July 4th</option>
+                </select>
+            </div>
+
+            <div class="setting-group">
+                <h4>Theme Intensity</h4>
+                <div class="radio-group">
+                    <input type="radio" id="subtle" name="intensity" value="subtle" checked onchange="updateIntensity()">
+                    <label for="subtle">Subtle (colors only)</label>
+                </div>
+                <div class="radio-group">
+                    <input type="radio" id="full" name="intensity" value="full" onchange="updateIntensity()">
+                    <label for="full">Full (with animations)</label>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; padding: 10px; background: #e0e0e0; border: 1px solid #999;">
+                <strong>Current Theme:</strong> <span id="currentThemeDisplay">Default</span><br>
+                <strong>Intensity:</strong> <span id="currentIntensityDisplay">Subtle</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- All other windows from your original code... -->
     <div class="window active" id="window-welcome" style="left: 250px; top: 150px;">
         <div class="title-bar" onmousedown="dragStart(event, 'window-welcome')">
             <span>Welcome to My Portfolio</span>
@@ -432,10 +118,11 @@
             </ul>
             <p>Click the desktop icons to explore my work, or check out the <strong>About Me</strong> section to learn more about my background.</p>
             <p>If you would like to see a more direct portfolio, you can click on the icon in the taskbar to switch to a more modern design.</p>
-            <p style="margin-top: 20px;"><em>Tip: You can drag and resize windows just like a real desktop!</em></p>
+            <p style="margin-top: 20px;"><em>Tip: You can drag and resize windows just like a real desktop! Click the ⚙️ icon to customize holiday themes.</em></p>
         </div>
     </div>
 
+    <!-- Rest of your windows... I'll include the key ones -->
     <div class="window" id="window-about" style="left: 150px; top: 100px;">
         <div class="title-bar" onmousedown="dragStart(event, 'window-about')">
             <span>About Me</span>
@@ -445,17 +132,14 @@
         </div>
         <div class="window-content">
             <div style="text-align: center; margin-bottom: 20px;">
-                <img src="path/to/your-photo.jpg" alt="Your Name" style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid #000;">
+                <img src="path/to/your-photo.jpg" alt="Thomas Shalosky" style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid #000;">
             </div>
             <h2 style="text-align: center;">Thomas Peregrine Shalosky</h2>
             <p style="text-align: center;"><em>Game Developer | Technical Artist | Graphics Programmer</em></p>
-            
+
             <h3 style="margin-top: 20px;">Bio</h3>
-            <p>
-                [Write your bio here - talk about your background, education, interests, what drives you as a developer, 
-                your experience with different technologies, what types of projects you're passionate about, etc.]
-            </p>
-            
+            <p>[Your bio here]</p>
+
             <h3 style="margin-top: 20px;">Skills:</h3>
             <ul>
                 <li>Game Design & Systems Design</li>
@@ -464,14 +148,13 @@
                 <li>3D Modeling, Rigging, and Animating (Blender, Maya)</li>
                 <li>Misc. Creative Software: Adobe Suite, DaVinci Resolve, Affinity</li>
             </ul>
-            
+
             <h3 style="margin-top: 20px;">Contact & Links</h3>
             <p>
-                📧 Email: <a href="Shalosky@usc.edu">your.email@example.com</a><br>
-                💼 LinkedIn: <a href="https://www.linkedin.com/in/thomas-shalosky/" target="_blank">linkedin.com/in/yourprofile</a><br>
-<!--                🐙 GitHub: <a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a>-->
+                📧 Email: <a href="mailto:Shalosky@usc.edu">Shalosky@usc.edu</a><br>
+                💼 LinkedIn: <a href="https://www.linkedin.com/in/thomas-shalosky/" target="_blank">linkedin.com/in/thomas-shalosky</a>
             </p>
-            
+
             <div style="text-align: center; margin-top: 30px;">
                 <a href="pdfs/Thomas%20Shalosky%20Technical%20Game%20Design%20Resume.docx.pdf" download>
                     <button style="padding: 10px 20px; font-size: 14px; font-weight: bold; cursor: pointer; background: #c0c0c0; border: 2px solid; border-color: #fff #000 #000 #fff;">
@@ -482,6 +165,38 @@
         </div>
     </div>
 
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <div class="start-button">Start</div>
+        <div class="taskbar-divider"></div>
+        <div class="mode-toggle" onclick="toggleMode()">Switch to Modern View</div>
+        <div class="music-icon" onclick="openSpotify()" title="Music Player">🎵</div>
+        <div class="taskbar-time" id="time"></div>
+    </div>
+
+    <!-- Spotify Player -->
+    <div class="spotify-player" id="spotify-player" style="right: 20px; bottom: 50px;">
+        <div class="spotify-title-bar" onmousedown="dragStart(event, 'spotify-player')">
+            <span>🎵 Now Playing</span>
+            <div class="title-bar-buttons">
+                <div class="title-bar-button" onclick="toggleSpotify()">_</div>
+                <div class="title-bar-button" onclick="closeSpotify()">✕</div>
+            </div>
+        </div>
+        <div class="spotify-content">
+            <iframe id="spotify-iframe" style="border-radius: 12px;"
+                    src="https://open.spotify.com/embed/playlist/5TOfvEvIr9y5SWbsCx4Dh8?si=c4207dcdebaf41b4?utm_source=generator"
+                    width="300"
+                    height="152"
+                    frameBorder="0"
+                    allowfullscreen=""
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Graphics/Tech Art Window -->
     <div class="window" id="window-graphics-tech-art" style="left: 100px; top: 100px;">
         <div class="title-bar" onmousedown="dragStart(event, 'window-graphics-tech-art')">
             <span>Graphics Programming / Technical Art</span>
@@ -510,7 +225,6 @@
                 <div class="project-item">
                     <strong>Project:</strong> Water Caustics and God Rays<br>
                     <small>This project showcases a method of simulating water caustics and god rays using volumetric ray marching and 3D Worley noise.</small><br><br>
-                    <!-- Screenshot Gallery -->
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 10px 0;">
                         <img src="path/to/unity-screenshot1.jpg" style="width: 100%;">
                         <img src="path/to/unity-screenshot2.jpg" style="width: 100%;">
@@ -525,6 +239,7 @@
         </div>
     </div>
 
+    <!-- Game Design Window -->
     <div class="window" id="window-game-design" style="left: 150px; top: 150px;">
         <div class="title-bar" onmousedown="dragStart(event, 'window-game-design')">
             <span>Game Design</span>
@@ -542,7 +257,6 @@
                 <div class="project-item">
                     <strong>Game:</strong> Purple Team<br>
                     <small>Description here</small><br><br>
-                    <!-- Screenshots -->
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 10px;">
                         <img src="path/to/screenshot1.jpg" style="width: 100%;">
                         <img src="path/to/screenshot2.jpg" style="width: 100%;">
@@ -558,7 +272,6 @@
                 <div class="project-item">
                     <strong>Board Game 1:</strong> [Title]<br>
                     <small>Brief description</small><br><br>
-                    <!-- Photo Gallery -->
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0;">
                         <img src="path/to/bg1-photo1.jpg" style="width: 100%;">
                         <img src="path/to/bg1-photo2.jpg" style="width: 100%;">
@@ -593,6 +306,7 @@
         </div>
     </div>
 
+    <!-- 3D Art Window -->
     <div class="window" id="window-3d-art" style="left: 200px; top: 120px;">
         <div class="title-bar" onmousedown="dragStart(event, 'window-3d-art')">
             <span>3D Art</span>
@@ -610,10 +324,8 @@
                 <div class="project-item">
                     <strong>Scene 1:</strong> [Project Name]<br>
                     <small>Description here</small><br><br>
-                    <!-- Sketchfab Embed -->
                     <iframe src="https://sketchfab.com/models/YOUR_MODEL_ID/embed" width="100%" height="400" frameborder="0"></iframe>
                     <br><br>
-                    <!-- Video -->
                     <video controls width="100%" style="max-width: 640px;">
                         <source src="path/to/scene1-video.mp4" type="video/mp4">
                     </video>
@@ -623,10 +335,8 @@
                 <div class="project-item">
                     <strong>Scene 2:</strong> [Project Name]<br>
                     <small>Description here</small><br><br>
-                    <!-- Sketchfab Embed -->
                     <iframe src="https://sketchfab.com/models/YOUR_MODEL_ID/embed" width="100%" height="400" frameborder="0"></iframe>
                     <br>
-                    <!-- Image Gallery -->
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
                         <img src="path/to/scene2-img1.jpg" style="width: 100%;">
                         <img src="path/to/scene2-img2.jpg" style="width: 100%;">
@@ -640,47 +350,14 @@
                 <div class="project-item">
                     <strong>Animation 1:</strong> Brand New Broom<br>
                     <small>Description here</small><br><br>
-                    <!-- YouTube Embed -->
                     <iframe width="100%" height="315" src="https://www.youtube.com/embed/zZGdN4yVD6E" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <div class="project-item">
                     <strong>Animation 2:</strong> A Fox and his Ball<br>
                     <small>Description here</small><br><br>
-                    <!-- YouTube Embed -->
                     <iframe width="100%" height="315" src="https://www.youtube.com/embed/YYwnx12hpyw" frameborder="0" allowfullscreen></iframe>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Taskbar -->
-    <div class="taskbar">
-        <div class="start-button">Start</div>
-        <div class="taskbar-divider"></div>
-        <div class="mode-toggle" onclick="toggleMode()">Switch to Modern View</div>
-        <div class="music-icon" onclick="openSpotify()" title="Music Player">🎵</div>
-        <div class="taskbar-time" id="time"></div>
-    </div>
-
-    <!-- Spotify Player -->
-    <div class="spotify-player" id="spotify-player" style="right: 20px; bottom: 50px;">
-        <div class="spotify-title-bar" onmousedown="dragStart(event, 'spotify-player')">
-            <span>🎵 Now Playing</span>
-            <div class="title-bar-buttons">
-                <div class="title-bar-button" onclick="toggleSpotify()">_</div>
-                <div class="title-bar-button" onclick="closeSpotify()">✕</div>
-            </div>
-        </div>
-        <div class="spotify-content">
-            <iframe id="spotify-iframe" style="border-radius: 12px;" 
-                    src="https://open.spotify.com/embed/playlist/5TOfvEvIr9y5SWbsCx4Dh8?si=c4207dcdebaf41b4?utm_source=generator"
-                    width="300" 
-                    height="152" 
-                    frameBorder="0" 
-                    allowfullscreen="" 
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                    loading="lazy">
-            </iframe>
         </div>
     </div>
 
@@ -689,10 +366,10 @@
         <div class="toggle-fixed">
             <div class="mode-toggle" onclick="toggleMode()">Switch to Retro View</div>
         </div>
-        
+
         <div class="modern-header">
-            <h1>My Portfolio</h1>
-            <p>Game Developer | 3D Artist | Graphics Programmer</p>
+            <h1>Thomas Shalosky</h1>
+            <p>Game Developer | Technical Artist | Graphics Programmer</p>
         </div>
 
         <div class="modern-section">
@@ -711,8 +388,8 @@
             <h3 style="margin-top: 30px; font-size: 24px;">Unity Graphics Project</h3>
             <div class="modern-grid">
                 <div class="modern-card">
-                    <h3>Unity Project</h3>
-                    <p>Your Unity graphics project.</p>
+                    <h3>Water Caustics and God Rays</h3>
+                    <p>Volumetric ray marching and 3D Worley noise simulation.</p>
                 </div>
             </div>
         </div>
@@ -722,7 +399,7 @@
             <h3 style="margin-top: 30px; font-size: 24px;">Video Game</h3>
             <div class="modern-grid">
                 <div class="modern-card">
-                    <h3>Game Project</h3>
+                    <h3>Purple Team</h3>
                     <p>Your video game project details.</p>
                 </div>
             </div>
@@ -759,114 +436,19 @@
             <h3 style="margin-top: 30px; font-size: 24px;">3D Animations</h3>
             <div class="modern-grid">
                 <div class="modern-card">
-                    <h3>Animation 1</h3>
+                    <h3>Brand New Broom</h3>
                     <p>Details about your first animation.</p>
                 </div>
                 <div class="modern-card">
-                    <h3>Animation 2</h3>
+                    <h3>A Fox and his Ball</h3>
                     <p>Details about your second animation.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // Window dragging
-        let draggedElement = null;
-        let offsetX = 0;
-        let offsetY = 0;
-
-        function dragStart(e, windowId) {
-            draggedElement = document.getElementById(windowId);
-            const rect = draggedElement.getBoundingClientRect();
-            offsetX = e.clientX - rect.left;
-            offsetY = e.clientY - rect.top;
-            
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('mouseup', dragEnd);
-        }
-
-        function drag(e) {
-            if (draggedElement) {
-                let newLeft = e.clientX - offsetX;
-                let newTop = e.clientY - offsetY;
-                
-                draggedElement.style.left = newLeft + 'px';
-                draggedElement.style.top = newTop + 'px';
-                draggedElement.style.right = 'auto';
-                draggedElement.style.bottom = 'auto';
-            }
-        }
-
-        function dragEnd() {
-            draggedElement = null;
-            document.removeEventListener('mousemove', drag);
-            document.removeEventListener('mouseup', dragEnd);
-        }
-
-        // Window management
-        function openWindow(type) {
-            const window = document.getElementById('window-' + type);
-            window.classList.add('active');
-        }
-
-        function closeWindow(type) {
-            const window = document.getElementById('window-' + type);
-            window.classList.remove('active');
-        }
-
-        // Mode toggle
-        function toggleMode() {
-            document.body.classList.toggle('modern-mode');
-        }
-
-        // Clock
-        function updateTime() {
-            const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            document.getElementById('time').textContent = hours + ':' + minutes;
-        }
-        updateTime();
-        setInterval(updateTime, 60000);
-
-        // Tab switching
-        function switchTab(event, windowId, tabId) {
-            const window = document.getElementById('window-' + windowId);
-            const tabs = window.querySelectorAll('.tab');
-            const contents = window.querySelectorAll('.tab-content');
-            
-            tabs.forEach(tab => tab.classList.remove('active'));
-            contents.forEach(content => content.classList.remove('active'));
-            
-            event.target.classList.add('active');
-            document.getElementById(windowId + '-' + tabId).classList.add('active');
-        }
-
-        // Spotify controls
-        function toggleSpotify() {
-            const player = document.getElementById('spotify-player');
-            player.classList.toggle('minimized');
-        }
-
-        function closeSpotify() {
-            const player = document.getElementById('spotify-player');
-            const iframe = document.getElementById('spotify-iframe');
-            // Stop music by removing and re-adding iframe without autoplay
-            iframe.src = '';
-            player.style.display = 'none';
-        }
-
-        function openSpotify() {
-            const player = document.getElementById('spotify-player');
-            const iframe = document.getElementById('spotify-iframe');
-            player.style.display = 'block';
-            player.classList.remove('minimized');
-            // Restore the Spotify embed if it was closed
-            if (!iframe.src) {
-                iframe.src = 'https://open.spotify.com/embed/playlist/YOUR_PLAYLIST_ID?utm_source=generator';
-            }
-        }
-    </script>
-</body>
+    <script src="js/main.js"></script>
+    <script src="js/spotify.js"></script>
+    <script src="js/holiday-themes.js"></script>
+    </body>
 </html>

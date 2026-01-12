@@ -1,0 +1,471 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'MS Sans Serif', Arial, sans-serif;
+    overflow: hidden;
+    background: #008080;
+    height: 100vh;
+    transition: background 0.5s ease;
+}
+
+/* Holiday Themes */
+body.theme-halloween { background: #1a0f00; }
+body.theme-thanksgiving { background: #4a2c0f; }
+body.theme-winter { background: #0f1a2e; }
+body.theme-valentine { background: #2e0f1a; }
+body.theme-stpatrick { background: #0f2e1a; }
+body.theme-birthday { background: #2e1a0f; }
+body.theme-july4th { background: #1a1a2e; }
+
+/* Desktop */
+.desktop {
+    height: calc(100vh - 40px);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    position: relative;
+}
+
+/* Particle effects */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.particle {
+    position: absolute;
+    pointer-events: none;
+}
+
+/* Settings Window */
+.settings-icon {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #fff #000 #000 #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 10000;
+}
+
+.settings-icon:active {
+    border-color: #000 #fff #fff #000;
+}
+
+.icon {
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.icon:active {
+    filter: brightness(1.2);
+}
+
+.icon-image {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 5px;
+    background: #c0c0c0;
+    border: 2px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: background 0.3s;
+}
+
+/* Holiday icon decorations */
+body.theme-halloween .icon-image { background: #ff6b1a; }
+body.theme-thanksgiving .icon-image { background: #d4a574; }
+body.theme-winter .icon-image { background: #b8d4ff; }
+body.theme-valentine .icon-image { background: #ffb8d4; }
+body.theme-stpatrick .icon-image { background: #90ee90; }
+body.theme-birthday .icon-image { background: #ffd700; }
+body.theme-july4th .icon-image { background: #ff6b6b; }
+
+.icon-label {
+    color: white;
+    font-size: 11px;
+    text-shadow: 1px 1px 2px #000;
+    word-wrap: break-word;
+}
+
+/* Window */
+.window {
+    position: absolute;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #dfdfdf #000 #000 #dfdfdf;
+    width: 600px;
+    height: 500px;
+    display: none;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    resize: both;
+    overflow: hidden;
+}
+
+.window.active {
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.title-bar {
+    background: linear-gradient(to right, #000080, #1084d0);
+    color: white;
+    padding: 3px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    font-weight: bold;
+    font-size: 12px;
+    transition: background 0.3s;
+}
+
+/* Holiday title bars */
+body.theme-halloween .title-bar { background: linear-gradient(to right, #ff6b1a, #ff8c42); }
+body.theme-thanksgiving .title-bar { background: linear-gradient(to right, #8b4513, #d2691e); }
+body.theme-winter .title-bar { background: linear-gradient(to right, #4169e1, #87ceeb); }
+body.theme-valentine .title-bar { background: linear-gradient(to right, #ff1493, #ff69b4); }
+body.theme-stpatrick .title-bar { background: linear-gradient(to right, #228b22, #90ee90); }
+body.theme-birthday .title-bar { background: linear-gradient(to right, #ff1493, #ffd700); }
+body.theme-july4th .title-bar { background: linear-gradient(to right, #b22234, #3c3b6e); }
+
+.title-bar-buttons {
+    display: flex;
+    gap: 2px;
+}
+
+.title-bar-button {
+    width: 16px;
+    height: 14px;
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #fff #000 #000 #fff;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    color: #000;
+}
+
+.title-bar-button:active {
+    border-color: #000 #fff #fff #000;
+}
+
+.window-content {
+    padding: 15px;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: white;
+}
+
+.window-content::-webkit-scrollbar {
+    width: 16px;
+}
+
+.window-content::-webkit-scrollbar-track {
+    background: #c0c0c0;
+}
+
+.window-content::-webkit-scrollbar-thumb {
+    background: #808080;
+    border: 1px solid;
+    border-color: #dfdfdf #000 #000 #dfdfdf;
+}
+
+.window-content::-webkit-scrollbar-button {
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #dfdfdf #000 #000 #dfdfdf;
+    height: 16px;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    background: #c0c0c0;
+    border-bottom: 2px solid #808080;
+}
+
+.tab {
+    padding: 5px 15px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #808080 #000 #000 #808080;
+    border-bottom: none;
+    cursor: pointer;
+    font-size: 11px;
+    margin-right: 2px;
+    position: relative;
+    top: 2px;
+}
+
+.tab.active {
+    background: white;
+    border-color: #dfdfdf #000 transparent #dfdfdf;
+    z-index: 1;
+}
+
+.tab:hover:not(.active) {
+    background: #d4d4d4;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.project-item {
+    padding: 10px;
+    margin: 5px 0;
+    background: #f0f0f0;
+    border: 1px solid #999;
+    cursor: pointer;
+}
+
+.project-item:hover {
+    background: #e0e0e0;
+}
+
+/* Taskbar */
+.taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: #c0c0c0;
+    border-top: 2px solid;
+    border-color: #fff #000 #000 #fff;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    gap: 5px;
+}
+
+.start-button {
+    height: 32px;
+    padding: 0 15px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #fff #000 #000 #fff;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+}
+
+.start-button:active {
+    border-color: #000 #fff #fff #000;
+}
+
+.start-button::before {
+    content: '⊞';
+    font-size: 20px;
+}
+
+.taskbar-divider {
+    width: 2px;
+    height: 32px;
+    background: linear-gradient(to right, #808080, #fff);
+}
+
+.taskbar-time {
+    margin-left: auto;
+    padding: 0 10px;
+    border: 1px inset;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+}
+
+.music-icon {
+    padding: 0 10px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.music-icon:hover {
+    background: #d4d4d4;
+}
+
+.mode-toggle {
+    padding: 5px 10px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #fff #000 #000 #fff;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+/* Modern mode */
+body.modern-mode {
+    background: #1a1a1a;
+    overflow-y: auto;
+}
+
+body.modern-mode .desktop,
+body.modern-mode .taskbar,
+body.modern-mode .settings-icon {
+    display: none;
+}
+
+.modern-container {
+    display: none;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    color: white;
+}
+
+body.modern-mode .modern-container {
+    display: block;
+}
+
+.modern-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.modern-header h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+    font-family: Arial, sans-serif;
+}
+
+.modern-section {
+    margin-bottom: 50px;
+}
+
+.modern-section h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+}
+
+.modern-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.modern-card {
+    background: #2a2a2a;
+    padding: 20px;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.modern-card:hover {
+    transform: translateY(-5px);
+}
+
+.modern-card h3 {
+    margin-bottom: 10px;
+    color: #4a9eff;
+}
+
+.toggle-fixed {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+/* Spotify Player */
+.spotify-player {
+    position: absolute;
+    left: auto;
+    top: auto;
+    z-index: 50;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #dfdfdf #000 #000 #dfdfdf;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+}
+
+.spotify-player.minimized .spotify-content {
+    display: none;
+}
+
+.spotify-title-bar {
+    background: linear-gradient(to right, #000080, #1084d0);
+    color: white;
+    padding: 3px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.spotify-content {
+    padding: 3px;
+}
+
+body.modern-mode .spotify-player {
+    display: none;
+}
+
+body.modern-mode .window {
+    display: none !important;
+}
+
+/* Settings specific styles */
+.setting-group {
+    margin: 15px 0;
+    padding: 10px;
+    background: #f0f0f0;
+    border: 1px solid #999;
+}
+
+.setting-group h4 {
+    margin-bottom: 10px;
+}
+
+.radio-group {
+    margin: 5px 0;
+}
+
+select {
+    padding: 5px;
+    width: 100%;
+    margin-top: 5px;
+}
