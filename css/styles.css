@@ -605,6 +605,15 @@ select {
         right: 10px;
     }
 
+    /* Only show the modern-view toggle button when actually in modern mode */
+    .toggle-fixed {
+        display: none;
+    }
+
+    body.modern-mode .toggle-fixed {
+        display: block;
+    }
+
 }
 
 @media (max-width: 480px) {
