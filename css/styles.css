@@ -53,27 +53,6 @@ body.modern-mode .particles {
     pointer-events: none;
 }
 
-/* Settings Icon */
-.settings-icon {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    width: 40px;
-    height: 40px;
-    background: #c0c0c0;
-    border: 2px solid;
-    border-color: #fff #000 #000 #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 20px;
-    z-index: 10000;
-}
-
-.settings-icon:active {
-    border-color: #000 #fff #fff #000;
-}
 
 /* Desktop Icons */
 .icon {
@@ -334,15 +313,6 @@ body.theme-july4th      .title-bar { background: linear-gradient(to right, #8b1a
     white-space: nowrap;
 }
 
-.music-icon {
-    padding: 0 10px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 16px;
-}
-.music-icon:hover { background: #d4d4d4; }
 
 .mode-toggle {
     padding: 5px 10px;
@@ -364,7 +334,6 @@ body.modern-mode {
 
 body.modern-mode .desktop,
 body.modern-mode .taskbar,
-body.modern-mode .settings-icon,
 body.modern-mode .spotify-player {
     display: none;
 }
@@ -636,14 +605,6 @@ select {
         right: 10px;
     }
 
-    /* Spotify hidden on mobile retro — too cramped */
-    .spotify-player {
-        display: none;
-    }
-
-    .music-icon {
-        display: none;
-    }
 }
 
 @media (max-width: 480px) {
@@ -659,3 +620,92 @@ select {
         font-size: 26px;
     }
 }
+
+/* ─── Start Menu ─────────────────────────────────────────── */
+.start-menu {
+    position: fixed;
+    bottom: 40px;
+    left: 0;
+    width: 260px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #fff #000 #000 #fff;
+    display: none;
+    flex-direction: row;
+    z-index: 99999;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+}
+
+.start-menu.open {
+    display: flex;
+}
+
+/* Vertical sidebar stripe (Win95 style) */
+.start-menu-sidebar {
+    width: 28px;
+    background: linear-gradient(to top, #000080, #1084d0);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 8px;
+    flex-shrink: 0;
+}
+
+.start-menu-sidebar span {
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    letter-spacing: 1px;
+    white-space: nowrap;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.start-menu-items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 2px 0;
+}
+
+.start-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    user-select: none;
+}
+
+.start-menu-item:hover {
+    background: #000080;
+    color: white;
+}
+
+.start-menu-icon {
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.start-menu-divider {
+    height: 1px;
+    background: #808080;
+    margin: 2px 4px;
+    box-shadow: 0 1px 0 #fff;
+}
+
+/* Holiday sidebar variants */
+body.theme-halloween .start-menu-sidebar    { background: linear-gradient(to top, #cc5500, #ff8c42); }
+body.theme-thanksgiving .start-menu-sidebar { background: linear-gradient(to top, #8b4513, #d2691e); }
+body.theme-winter .start-menu-sidebar       { background: linear-gradient(to top, #1e4db7, #87ceeb); }
+body.theme-valentine .start-menu-sidebar    { background: linear-gradient(to top, #cc0066, #ff69b4); }
+body.theme-stpatrick .start-menu-sidebar    { background: linear-gradient(to top, #1a6b22, #55cc55); }
+body.theme-birthday .start-menu-sidebar     { background: linear-gradient(to top, #cc0080, #ffd700); }
+body.theme-july4th .start-menu-sidebar      { background: linear-gradient(to top, #8b1a1a, #3c3b8e); }
+
+/* Hide start menu in modern mode */
+body.modern-mode .start-menu { display: none !important; }

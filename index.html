@@ -10,9 +10,6 @@
 </head>
 <body>
 
-<!-- Settings Icon (retro mode only) -->
-<div class="settings-icon" onclick="openWindow('settings')" title="Settings">⚙️</div>
-
 <!-- Particle Container -->
 <div class="particles" id="particles"></div>
 
@@ -479,13 +476,34 @@
 </div>
 
 <!-- ═══════════════════════════════════════════
+     START MENU (pops up above taskbar)
+═══════════════════════════════════════════ -->
+<div class="start-menu" id="start-menu">
+    <div class="start-menu-sidebar">
+        <span>Thomas Shalosky</span>
+    </div>
+    <div class="start-menu-items">
+        <div class="start-menu-item" onclick="startMenuOpenMusic()">
+            <span class="start-menu-icon">🎵</span>
+            <span>Music Player</span>
+        </div>
+        <div class="start-menu-divider"></div>
+        <div class="start-menu-item" onclick="startMenuOpenSettings()">
+            <span class="start-menu-icon">⚙️</span>
+            <span>Settings</span>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
      TASKBAR
 ═══════════════════════════════════════════ -->
 <div class="taskbar">
-    <div class="start-button">Start</div>
+    <div class="start-button" id="start-button" onclick="toggleStartMenu()">
+        <span class="start-logo">⊞</span> Start
+    </div>
     <div class="taskbar-divider"></div>
     <div class="mode-toggle" onclick="toggleMode()">Switch to Modern View</div>
-    <div class="music-icon" onclick="openSpotify()" title="Music Player">🎵</div>
     <div class="taskbar-time" id="time"></div>
 </div>
 

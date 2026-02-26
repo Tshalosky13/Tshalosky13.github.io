@@ -68,7 +68,50 @@ function closeWindow(type) {
 // Mode toggle
 function toggleMode() {
     document.body.classList.toggle('modern-mode');
+    closeStartMenu();
 }
+
+// Start Menu
+function toggleStartMenu() {
+    const menu = document.getElementById('start-menu');
+    const isOpen = menu.classList.contains('open');
+    if (isOpen) {
+        closeStartMenu();
+    } else {
+        menu.classList.add('open');
+    }
+}
+
+function closeStartMenu() {
+    document.getElementById('start-menu').classList.remove('open');
+}
+
+function startMenuOpenSettings() {
+    closeStartMenu();
+    openWindow('settings');
+}
+
+function startMenuOpenMusic() {
+    closeStartMenu();
+    openSpotify();
+}
+
+// Close start menu when clicking outside
+document.addEventListener('mousedown', function(e) {
+    const menu = document.getElementById('start-menu');
+    const startBtn = document.getElementById('start-button');
+    if (menu && !menu.contains(e.target) && startBtn && !startBtn.contains(e.target)) {
+        closeStartMenu();
+    }
+});
+
+document.addEventListener('touchstart', function(e) {
+    const menu = document.getElementById('start-menu');
+    const startBtn = document.getElementById('start-button');
+    if (menu && !menu.contains(e.target) && startBtn && !startBtn.contains(e.target)) {
+        closeStartMenu();
+    }
+});
 
 // Clock
 function updateTime() {
