@@ -1,454 +1,613 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="path/to/your/image.png" type="image/png">
-        <title>Thomas Shalosky Portfolio</title>
-        <link rel="stylesheet" href="css/styles.css">
-    </head>
-    <body>
-    <!-- Settings Icon -->
-    <div class="settings-icon" onclick="openWindow('settings')" title="Settings">⚙️</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!-- FAVICON: Replace with your actual favicon file -->
+    <link rel="icon" href="images/favicon.png" type="image/png">
+    <title>Thomas Shalosky Portfolio</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
 
-    <!-- Particle Container -->
-    <div class="particles" id="particles"></div>
+<!-- Settings Icon (retro mode only) -->
+<div class="settings-icon" onclick="openWindow('settings')" title="Settings">⚙️</div>
 
-    <!-- Retro OS Mode -->
-    <div class="desktop" id="desktop">
-        <!-- Icons -->
-        <div class="icon" onclick="openWindow('welcome')">
-            <div class="icon-image">📄</div>
-            <div class="icon-label">Welcome</div>
-        </div>
-        <div class="icon" onclick="openWindow('about')">
-            <div class="icon-image">👤</div>
-            <div class="icon-label">About Me</div>
-        </div>
-        <div class="icon" onclick="openWindow('graphics-tech-art')">
-            <div class="icon-image">💻</div>
-            <div class="icon-label">Graphics/Tech Art</div>
-        </div>
-        <div class="icon" onclick="openWindow('game-design')">
-            <div class="icon-image">🎮</div>
-            <div class="icon-label">Game Design</div>
-        </div>
-        <div class="icon" onclick="openWindow('3d-art')">
-            <div class="icon-image">🎨</div>
-            <div class="icon-label">3D Art</div>
+<!-- Particle Container -->
+<div class="particles" id="particles"></div>
+
+<!-- ═══════════════════════════════════════════
+     RETRO DESKTOP
+═══════════════════════════════════════════ -->
+<div class="desktop" id="desktop">
+    <!--
+        ICON IMAGES: Replace the emoji text inside .icon-image with:
+            <img src="images/icon-welcome.png" alt="Welcome">
+        etc. for each icon. Recommended size: 48x48 px, pixel art style.
+        Or keep the emoji — both work!
+    -->
+    <div class="icon" onclick="openWindow('welcome')">
+        <div class="icon-image">📄</div>
+        <div class="icon-label">Welcome</div>
+    </div>
+    <div class="icon" onclick="openWindow('about')">
+        <div class="icon-image">👤</div>
+        <div class="icon-label">About Me</div>
+    </div>
+    <div class="icon" onclick="openWindow('graphics-tech-art')">
+        <div class="icon-image">💻</div>
+        <div class="icon-label">Graphics/Tech Art</div>
+    </div>
+    <div class="icon" onclick="openWindow('game-design')">
+        <div class="icon-image">🎮</div>
+        <div class="icon-label">Game Design</div>
+    </div>
+    <div class="icon" onclick="openWindow('3d-art')">
+        <div class="icon-image">🎨</div>
+        <div class="icon-label">3D Art</div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SETTINGS WINDOW
+═══════════════════════════════════════════ -->
+<div class="window" id="window-settings" style="left: 300px; top: 100px; width: 500px; height: 450px;">
+    <div class="title-bar" onmousedown="dragStart(event, 'window-settings')"
+         ontouchstart="touchDragStart(event, 'window-settings')">
+        <span>⚙️ Settings</span>
+        <div class="title-bar-buttons">
+            <div class="title-bar-button" onclick="closeWindow('settings')">✕</div>
         </div>
     </div>
-
-    <!-- Settings Window -->
-    <div class="window" id="window-settings" style="left: 300px; top: 100px; width: 500px; height: 450px;">
-        <div class="title-bar" onmousedown="dragStart(event, 'window-settings')">
-            <span>⚙️ Settings</span>
-            <div class="title-bar-buttons">
-                <div class="title-bar-button" onclick="closeWindow('settings')">✕</div>
+    <div class="window-content">
+        <h3>Holiday Theme Settings</h3>
+        <div class="setting-group">
+            <h4>Theme Mode</h4>
+            <div class="radio-group">
+                <input type="radio" id="auto" name="themeMode" value="auto" checked onchange="updateThemeMode()">
+                <label for="auto">Automatic (based on date)</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" id="manual" name="themeMode" value="manual" onchange="updateThemeMode()">
+                <label for="manual">Manual Selection</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" id="off" name="themeMode" value="off" onchange="updateThemeMode()">
+                <label for="off">Themes Disabled</label>
             </div>
         </div>
-        <div class="window-content">
-            <h3>Holiday Theme Settings</h3>
-
-            <div class="setting-group">
-                <h4>Theme Mode</h4>
-                <div class="radio-group">
-                    <input type="radio" id="auto" name="themeMode" value="auto" checked onchange="updateThemeMode()">
-                    <label for="auto">Automatic (based on date)</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="manual" name="themeMode" value="manual" onchange="updateThemeMode()">
-                    <label for="manual">Manual Selection</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="off" name="themeMode" value="off" onchange="updateThemeMode()">
-                    <label for="off">Themes Disabled</label>
-                </div>
+        <div class="setting-group" id="manualThemeSelect" style="display: none;">
+            <h4>Select Theme</h4>
+            <select id="themeSelector" onchange="applyManualTheme()">
+                <option value="none">Default (No Theme)</option>
+                <option value="halloween">🎃 Halloween</option>
+                <option value="thanksgiving">🦃 Thanksgiving</option>
+                <option value="winter">❄️ Winter/Christmas</option>
+                <option value="valentine">💝 Valentine's Day</option>
+                <option value="stpatrick">🍀 St. Patrick's Day</option>
+                <option value="birthday">🎂 Birthday</option>
+                <option value="july4th">🎆 July 4th</option>
+            </select>
+        </div>
+        <div class="setting-group">
+            <h4>Theme Intensity</h4>
+            <div class="radio-group">
+                <input type="radio" id="subtle" name="intensity" value="subtle" checked onchange="updateIntensity()">
+                <label for="subtle">Subtle (colors only)</label>
             </div>
-
-            <div class="setting-group" id="manualThemeSelect" style="display: none;">
-                <h4>Select Theme</h4>
-                <select id="themeSelector" onchange="applyManualTheme()">
-                    <option value="none">Default (No Theme)</option>
-                    <option value="halloween">🎃 Halloween</option>
-                    <option value="thanksgiving">🦃 Thanksgiving</option>
-                    <option value="winter">❄️ Winter/Christmas</option>
-                    <option value="valentine">💝 Valentine's Day</option>
-                    <option value="stpatrick">🍀 St. Patrick's Day</option>
-                    <option value="birthday">🎂 Birthday</option>
-                    <option value="july4th">🎆 July 4th</option>
-                </select>
+            <div class="radio-group">
+                <input type="radio" id="full" name="intensity" value="full" onchange="updateIntensity()">
+                <label for="full">Full (with animations)</label>
             </div>
-
-            <div class="setting-group">
-                <h4>Theme Intensity</h4>
-                <div class="radio-group">
-                    <input type="radio" id="subtle" name="intensity" value="subtle" checked onchange="updateIntensity()">
-                    <label for="subtle">Subtle (colors only)</label>
-                </div>
-                <div class="radio-group">
-                    <input type="radio" id="full" name="intensity" value="full" onchange="updateIntensity()">
-                    <label for="full">Full (with animations)</label>
-                </div>
-            </div>
-
-            <div style="margin-top: 20px; padding: 10px; background: #e0e0e0; border: 1px solid #999;">
-                <strong>Current Theme:</strong> <span id="currentThemeDisplay">Default</span><br>
-                <strong>Intensity:</strong> <span id="currentIntensityDisplay">Subtle</span>
-            </div>
+        </div>
+        <div style="margin-top: 20px; padding: 10px; background: #e0e0e0; border: 1px solid #999;">
+            <strong>Current Theme:</strong> <span id="currentThemeDisplay">Default</span><br>
+            <strong>Intensity:</strong> <span id="currentIntensityDisplay">Subtle</span>
         </div>
     </div>
+</div>
 
-    <!-- All other windows from your original code... -->
-    <div class="window active" id="window-welcome" style="left: 250px; top: 150px;">
-        <div class="title-bar" onmousedown="dragStart(event, 'window-welcome')">
-            <span>Welcome to My Portfolio</span>
-            <div class="title-bar-buttons">
-                <div class="title-bar-button" onclick="closeWindow('welcome')">✕</div>
-            </div>
-        </div>
-        <div class="window-content">
-            <h2>Welcome!</h2>
-            <p>Hi, I'm Thomas Shalosky - a game developer, tech artist, and graphics programmer.</p>
-            <p>This portfolio showcases my work across multiple disciplines:</p>
-            <ul>
-                <li><strong>Graphics Programming / Technical Art</strong> - C++ graphics projects and Unity shaders</li>
-                <li><strong>Game Design</strong> - Video and board game projects</li>
-                <li><strong>3D Art</strong> - Modeled scenes and animations</li>
-            </ul>
-            <p>Click the desktop icons to explore my work, or check out the <strong>About Me</strong> section to learn more about my background.</p>
-            <p>If you would like to see a more direct portfolio, you can click on the icon in the taskbar to switch to a more modern design.</p>
-            <p style="margin-top: 20px;"><em>Tip: You can drag and resize windows just like a real desktop! Click the ⚙️ icon to customize holiday themes.</em></p>
+<!-- ═══════════════════════════════════════════
+     WELCOME WINDOW
+═══════════════════════════════════════════ -->
+<div class="window active" id="window-welcome" style="left: 250px; top: 150px;">
+    <div class="title-bar" onmousedown="dragStart(event, 'window-welcome')"
+         ontouchstart="touchDragStart(event, 'window-welcome')">
+        <span>Welcome to My Portfolio</span>
+        <div class="title-bar-buttons">
+            <div class="title-bar-button" onclick="closeWindow('welcome')">✕</div>
         </div>
     </div>
+    <div class="window-content">
+        <h2>Welcome!</h2>
 
-    <!-- Rest of your windows... I'll include the key ones -->
-    <div class="window" id="window-about" style="left: 150px; top: 100px;">
-        <div class="title-bar" onmousedown="dragStart(event, 'window-about')">
-            <span>About Me</span>
-            <div class="title-bar-buttons">
-                <div class="title-bar-button" onclick="closeWindow('about')">✕</div>
-            </div>
+        <!-- ▼▼▼ YOUR WELCOME TEXT HERE ▼▼▼ -->
+        <p>Hi, I'm Thomas Shalosky — a game developer, tech artist, and graphics programmer.</p>
+        <p style="margin-top: 10px;">
+            <!-- ADD YOUR WELCOME DESCRIPTION HERE -->
+            [Add a sentence or two about who you are and what visitors will find here.]
+        </p>
+        <!-- ▲▲▲ END WELCOME TEXT ▲▲▲ -->
+
+        <p style="margin-top: 12px;">This portfolio showcases my work across multiple disciplines:</p>
+        <ul style="margin: 8px 0 8px 20px; font-size: 13px;">
+            <li><strong>Graphics Programming / Technical Art</strong> — C++ graphics projects and Unity shaders</li>
+            <li><strong>Game Design</strong> — Video and board game projects</li>
+            <li><strong>3D Art</strong> — Modeled scenes and animations</li>
+        </ul>
+        <p>Click the desktop icons to explore, or check out <strong>About Me</strong> to learn about my background.</p>
+        <p style="margin-top: 10px;">To see a cleaner layout, click <strong>Switch to Modern View</strong> in the taskbar.</p>
+        <p style="margin-top: 12px; color: #555; font-size: 11px;"><em>Tip: Drag and resize windows just like a real desktop! Click ⚙️ to customize holiday themes.</em></p>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     ABOUT ME WINDOW
+═══════════════════════════════════════════ -->
+<div class="window" id="window-about" style="left: 150px; top: 100px;">
+    <div class="title-bar" onmousedown="dragStart(event, 'window-about')"
+         ontouchstart="touchDragStart(event, 'window-about')">
+        <span>About Me</span>
+        <div class="title-bar-buttons">
+            <div class="title-bar-button" onclick="closeWindow('about')">✕</div>
         </div>
-        <div class="window-content">
-            <div style="text-align: center; margin-bottom: 20px;">
-                <img src="path/to/your-photo.jpg" alt="Thomas Shalosky" style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid #000;">
+    </div>
+    <div class="window-content">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <!-- PHOTO: Replace path with your actual photo -->
+            <img src="images/profile-photo.jpg" alt="Thomas Shalosky"
+                 onerror="this.style.display='none'"
+                 style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid #000; object-fit: cover;">
+        </div>
+        <h2 style="text-align: center;">Thomas Peregrine Shalosky</h2>
+        <p style="text-align: center;"><em>Game Developer | Technical Artist | Graphics Programmer</em></p>
+
+        <h3 style="margin-top: 20px;">Bio</h3>
+        <!-- ▼▼▼ YOUR BIO HERE ▼▼▼ -->
+        <p>[Add your bio here — background, education, what drives you, etc.]</p>
+        <!-- ▲▲▲ END BIO ▲▲▲ -->
+
+        <h3 style="margin-top: 20px;">Skills</h3>
+        <ul style="margin-left: 18px; font-size: 13px; line-height: 1.8;">
+            <li>Game Design &amp; Systems Design</li>
+            <li>C++ Graphics Programming (OpenGL)</li>
+            <li>Unity &amp; Unreal Engine</li>
+            <li>3D Modeling, Rigging, and Animating (Blender, Maya)</li>
+            <li>Adobe Suite, DaVinci Resolve, Affinity</li>
+        </ul>
+
+        <h3 style="margin-top: 20px;">Contact &amp; Links</h3>
+        <p style="font-size: 13px; line-height: 2;">
+            📧 <a href="mailto:Shalosky@usc.edu">Shalosky@usc.edu</a><br>
+            💼 <a href="https://www.linkedin.com/in/thomas-shalosky/" target="_blank">linkedin.com/in/thomas-shalosky</a>
+        </p>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="pdfs/Thomas%20Shalosky%20Technical%20Game%20Design%20Resume.docx.pdf" download>
+                <button class="retro-btn" style="padding: 8px 20px; font-weight: bold;">📄 Download Resume</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     GRAPHICS / TECH ART WINDOW
+═══════════════════════════════════════════ -->
+<div class="window" id="window-graphics-tech-art" style="left: 100px; top: 80px;">
+    <div class="title-bar" onmousedown="dragStart(event, 'window-graphics-tech-art')"
+         ontouchstart="touchDragStart(event, 'window-graphics-tech-art')">
+        <span>Graphics Programming / Technical Art</span>
+        <div class="title-bar-buttons">
+            <div class="title-bar-button" onclick="closeWindow('graphics-tech-art')">✕</div>
+        </div>
+    </div>
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab(event, 'graphics-tech-art', 'cpp')">C++ Projects</div>
+        <div class="tab" onclick="switchTab(event, 'graphics-tech-art', 'unity')">Unity Project</div>
+    </div>
+    <div class="window-content">
+
+        <!-- ── C++ PROJECTS TAB ── -->
+        <div class="tab-content active" id="graphics-tech-art-cpp">
+            <h3>C++ Graphics Projects</h3>
+
+            <!-- ▼▼▼ C++ PROJECT 1 — fill in ▼▼▼ -->
+            <div class="project-item">
+                <h4>Project 1: [Name]</h4>
+                <p>[Description of the project, techniques used, etc.]</p>
+                <br>
+                <!-- Video embed: replace VIDEO_ID with YouTube video ID -->
+                <!--
+                <iframe width="100%" height="250" src="https://www.youtube.com/embed/VIDEO_ID"
+                        frameborder="0" allowfullscreen style="margin: 8px 0;"></iframe>
+                -->
+                <div class="img-grid-2">
+                    <!-- Replace with actual screenshots -->
+                    <div class="img-placeholder" style="height:120px;">Screenshot 1</div>
+                    <div class="img-placeholder" style="height:120px;">Screenshot 2</div>
+                </div>
+                <!-- GitHub link -->
+                <!--
+                <a href="https://github.com/YOUR_USERNAME/REPO" target="_blank">
+                    <button class="retro-btn">View on GitHub</button>
+                </a>
+                -->
             </div>
-            <h2 style="text-align: center;">Thomas Peregrine Shalosky</h2>
-            <p style="text-align: center;"><em>Game Developer | Technical Artist | Graphics Programmer</em></p>
+            <!-- ▲▲▲ END C++ PROJECT 1 ▲▲▲ -->
 
-            <h3 style="margin-top: 20px;">Bio</h3>
-            <p>[Your bio here]</p>
+            <!-- ▼▼▼ C++ PROJECT 2 — fill in ▼▼▼ -->
+            <div class="project-item">
+                <h4>Project 2: [Name]</h4>
+                <p>[Description]</p>
+                <br>
+                <div class="img-grid-2">
+                    <div class="img-placeholder" style="height:120px;">Screenshot 1</div>
+                    <div class="img-placeholder" style="height:120px;">Screenshot 2</div>
+                </div>
+            </div>
+            <!-- ▲▲▲ END C++ PROJECT 2 ▲▲▲ -->
 
-            <h3 style="margin-top: 20px;">Skills:</h3>
-            <ul>
-                <li>Game Design & Systems Design</li>
-                <li>C++ Graphics Programming (OpenGL)</li>
-                <li>Unity & Unreal Engine</li>
-                <li>3D Modeling, Rigging, and Animating (Blender, Maya)</li>
-                <li>Misc. Creative Software: Adobe Suite, DaVinci Resolve, Affinity</li>
-            </ul>
+            <!-- ▼▼▼ ADD MORE C++ PROJECTS BY COPYING A PROJECT-ITEM BLOCK ▼▼▼ -->
 
-            <h3 style="margin-top: 20px;">Contact & Links</h3>
-            <p>
-                📧 Email: <a href="mailto:Shalosky@usc.edu">Shalosky@usc.edu</a><br>
-                💼 LinkedIn: <a href="https://www.linkedin.com/in/thomas-shalosky/" target="_blank">linkedin.com/in/thomas-shalosky</a>
-            </p>
+        </div>
 
-            <div style="text-align: center; margin-top: 30px;">
-                <a href="pdfs/Thomas%20Shalosky%20Technical%20Game%20Design%20Resume.docx.pdf" download>
-                    <button style="padding: 10px 20px; font-size: 14px; font-weight: bold; cursor: pointer; background: #c0c0c0; border: 2px solid; border-color: #fff #000 #000 #fff;">
-                        📄 Download Resume
-                    </button>
+        <!-- ── UNITY PROJECT TAB ── -->
+        <div class="tab-content" id="graphics-tech-art-unity">
+            <h3>Unity Graphics Project</h3>
+            <div class="project-item">
+                <h4>Water Caustics and God Rays</h4>
+                <p>This project simulates water caustics and god rays using volumetric ray marching and 3D Worley noise inside Unity's shader graph and custom HLSL.</p>
+                <br>
+                <!-- ▼▼▼ CAUSTICS SCREENSHOTS — replace src paths ▼▼▼ -->
+                <div class="img-grid-2">
+                    <div class="img-placeholder" style="height:130px;">Caustics Screenshot 1</div>
+                    <div class="img-placeholder" style="height:130px;">Caustics Screenshot 2</div>
+                    <div class="img-placeholder" style="height:130px;">Caustics Screenshot 3</div>
+                    <div class="img-placeholder" style="height:130px;">Caustics Screenshot 4</div>
+                </div>
+                <!-- ▲▲▲ REPLACE PLACEHOLDERS WITH:
+                    <img src="images/caustics-1.jpg" style="width:100%;">
+                ▲▲▲ -->
+                <br>
+                <a href="https://github.com/raihansyahdean/Water-Light-Graphics-Project" target="_blank">
+                    <button class="retro-btn">View on GitHub</button>
                 </a>
             </div>
         </div>
-    </div>
 
-    <!-- Taskbar -->
-    <div class="taskbar">
-        <div class="start-button">Start</div>
-        <div class="taskbar-divider"></div>
-        <div class="mode-toggle" onclick="toggleMode()">Switch to Modern View</div>
-        <div class="music-icon" onclick="openSpotify()" title="Music Player">🎵</div>
-        <div class="taskbar-time" id="time"></div>
     </div>
+</div>
 
-    <!-- Spotify Player -->
-    <div class="spotify-player" id="spotify-player" style="right: 20px; bottom: 50px;">
-        <div class="spotify-title-bar" onmousedown="dragStart(event, 'spotify-player')">
-            <span>🎵 Now Playing</span>
-            <div class="title-bar-buttons">
-                <div class="title-bar-button" onclick="toggleSpotify()">_</div>
-                <div class="title-bar-button" onclick="closeSpotify()">✕</div>
-            </div>
-        </div>
-        <div class="spotify-content">
-            <iframe id="spotify-iframe" style="border-radius: 12px;"
-                    src="https://open.spotify.com/embed/playlist/5TOfvEvIr9y5SWbsCx4Dh8?si=c4207dcdebaf41b4?utm_source=generator"
-                    width="300"
-                    height="152"
-                    frameBorder="0"
-                    allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy">
-            </iframe>
+<!-- ═══════════════════════════════════════════
+     GAME DESIGN WINDOW
+═══════════════════════════════════════════ -->
+<div class="window" id="window-game-design" style="left: 150px; top: 100px;">
+    <div class="title-bar" onmousedown="dragStart(event, 'window-game-design')"
+         ontouchstart="touchDragStart(event, 'window-game-design')">
+        <span>Game Design</span>
+        <div class="title-bar-buttons">
+            <div class="title-bar-button" onclick="closeWindow('game-design')">✕</div>
         </div>
     </div>
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab(event, 'game-design', 'video-game')">Video Game</div>
+        <div class="tab" onclick="switchTab(event, 'game-design', 'board-games')">Board Games</div>
+    </div>
+    <div class="window-content">
 
-    <!-- Graphics/Tech Art Window -->
-    <div class="window" id="window-graphics-tech-art" style="left: 100px; top: 100px;">
-        <div class="title-bar" onmousedown="dragStart(event, 'window-graphics-tech-art')">
-            <span>Graphics Programming / Technical Art</span>
-            <div class="title-bar-buttons">
-                <div class="title-bar-button" onclick="closeWindow('graphics-tech-art')">✕</div>
+        <!-- ── VIDEO GAME TAB ── -->
+        <div class="tab-content active" id="game-design-video-game">
+            <h3>Video Game</h3>
+            <div class="project-item">
+                <h4>Purple Team</h4>
+                <!-- ▼▼▼ PURPLE TEAM DESCRIPTION ▼▼▼ -->
+                <p>[Add your description of Purple Team here — genre, gameplay, your role, etc.]</p>
+                <!-- ▲▲▲ END DESCRIPTION ▲▲▲ -->
+                <br>
+                <!-- ▼▼▼ PURPLE TEAM SCREENSHOTS — replace placeholders ▼▼▼ -->
+                <div class="img-grid-2">
+                    <div class="img-placeholder" style="height:130px;">Screenshot 1</div>
+                    <div class="img-placeholder" style="height:130px;">Screenshot 2</div>
+                    <div class="img-placeholder" style="height:130px;">Screenshot 3</div>
+                    <div class="img-placeholder" style="height:130px;">Screenshot 4</div>
+                </div>
+                <br>
+                <a href="https://tshalosky13.itch.io/purple-team" target="_blank">
+                    <button class="retro-btn">▶ Play on itch.io</button>
+                </a>
+                <!-- ▼▼▼ WINDOWS DOWNLOAD — replace href with actual file path ▼▼▼ -->
+                <a href="downloads/PurpleTeam-Windows.zip" download>
+                    <button class="retro-btn">⬇ Download (Windows)</button>
+                </a>
+                <!-- ▲▲▲ END PURPLE TEAM ▲▲▲ -->
             </div>
         </div>
-        <div class="tabs">
-            <div class="tab active" onclick="switchTab(event, 'graphics-tech-art', 'cpp')">C++ Projects</div>
-            <div class="tab" onclick="switchTab(event, 'graphics-tech-art', 'unity')">Unity Project</div>
-        </div>
-        <div class="window-content">
-            <div class="tab-content active" id="graphics-tech-art-cpp">
-                <h3>C++ Graphics Projects</h3>
-                <div class="project-item">
-                    <strong>Project 1:</strong> [Name]<br>
-                    <small>Description, video demo, and GitHub link.</small>
+
+        <!-- ── BOARD GAMES TAB ── -->
+        <div class="tab-content" id="game-design-board-games">
+            <h3>Board Games</h3>
+
+            <!-- ▼▼▼ BOARD GAME 1 ▼▼▼ -->
+            <div class="project-item">
+                <h4>[Board Game 1 Title]</h4>
+                <p>[Brief description of mechanics, theme, player count, etc.]</p>
+                <br>
+                <div class="img-grid-3">
+                    <div class="img-placeholder" style="height:100px;">Photo 1</div>
+                    <div class="img-placeholder" style="height:100px;">Photo 2</div>
+                    <div class="img-placeholder" style="height:100px;">Photo 3</div>
                 </div>
-                <div class="project-item">
-                    <strong>Project 2:</strong> [Name]<br>
-                    <small>Description, video demo, and GitHub link.</small>
+                <br>
+                <!-- Replace href with actual PDF paths -->
+                <a href="pdfs/bg1-rules.pdf" target="_blank"><button class="retro-btn">📄 View Rules</button></a>
+                <a href="pdfs/bg1-journal.pdf" target="_blank"><button class="retro-btn">📓 Design Journal</button></a>
+            </div>
+            <!-- ▲▲▲ END BOARD GAME 1 ▲▲▲ -->
+
+            <!-- ▼▼▼ BOARD GAME 2 ▼▼▼ -->
+            <div class="project-item">
+                <h4>[Board Game 2 Title]</h4>
+                <p>[Description]</p>
+                <br>
+                <div class="img-grid-3">
+                    <div class="img-placeholder" style="height:100px;">Photo 1</div>
+                    <div class="img-placeholder" style="height:100px;">Photo 2</div>
+                    <div class="img-placeholder" style="height:100px;">Photo 3</div>
+                </div>
+                <br>
+                <a href="pdfs/bg2-rules.pdf" target="_blank"><button class="retro-btn">📄 View Rules</button></a>
+                <a href="pdfs/bg2-journal.pdf" target="_blank"><button class="retro-btn">📓 Design Journal</button></a>
+            </div>
+            <!-- ▲▲▲ END BOARD GAME 2 ▲▲▲ -->
+
+            <!-- ▼▼▼ BOARD GAME 3 ▼▼▼ -->
+            <div class="project-item">
+                <h4>[Board Game 3 Title]</h4>
+                <p>[Description]</p>
+                <br>
+                <div class="img-grid-3">
+                    <div class="img-placeholder" style="height:100px;">Photo 1</div>
+                    <div class="img-placeholder" style="height:100px;">Photo 2</div>
+                    <div class="img-placeholder" style="height:100px;">Photo 3</div>
+                </div>
+                <br>
+                <a href="pdfs/bg3-rules.pdf" target="_blank"><button class="retro-btn">📄 View Rules</button></a>
+                <a href="pdfs/bg3-journal.pdf" target="_blank"><button class="retro-btn">📓 Design Journal</button></a>
+            </div>
+            <!-- ▲▲▲ END BOARD GAME 3 ▲▲▲ -->
+
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     3D ART WINDOW
+═══════════════════════════════════════════ -->
+<div class="window" id="window-3d-art" style="left: 200px; top: 120px;">
+    <div class="title-bar" onmousedown="dragStart(event, 'window-3d-art')"
+         ontouchstart="touchDragStart(event, 'window-3d-art')">
+        <span>3D Art</span>
+        <div class="title-bar-buttons">
+            <div class="title-bar-button" onclick="closeWindow('3d-art')">✕</div>
+        </div>
+    </div>
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab(event, '3d-art', 'scenes')">3D Scenes</div>
+        <div class="tab" onclick="switchTab(event, '3d-art', 'animations')">Animations</div>
+    </div>
+    <div class="window-content">
+
+        <!-- ── 3D SCENES TAB ── -->
+        <div class="tab-content active" id="3d-art-scenes">
+            <h3>3D Modeled Scenes</h3>
+
+            <!-- ▼▼▼ SCENE 1 ▼▼▼ -->
+            <div class="project-item">
+                <h4>Scene 1: [Project Name]</h4>
+                <p>[Description — software used, poly count, techniques, etc.]</p>
+                <br>
+                <!--
+                    SKETCHFAB: Once you have a Sketchfab account and upload your model,
+                    replace YOUR_MODEL_ID below with the model ID from the embed URL.
+                    Example embed URL: https://sketchfab.com/models/abc123def456/embed
+                -->
+                <!--
+                <iframe src="https://sketchfab.com/models/YOUR_MODEL_ID/embed"
+                        width="100%" height="350" frameborder="0"
+                        allow="autoplay; fullscreen; xr-spatial-tracking"
+                        style="margin: 8px 0;"></iframe>
+                -->
+                <div class="img-placeholder" style="height:200px; margin: 8px 0;">
+                    Sketchfab embed goes here — add model ID once uploaded
+                </div>
+                <div class="img-grid-2">
+                    <div class="img-placeholder" style="height:120px;">Render 1</div>
+                    <div class="img-placeholder" style="height:120px;">Render 2</div>
+                </div>
+                <!-- Optional download button -->
+                <!-- <a href="downloads/scene1.zip" download><button class="retro-btn">⬇ Download Scene Files</button></a> -->
+            </div>
+            <!-- ▲▲▲ END SCENE 1 ▲▲▲ -->
+
+            <!-- ▼▼▼ SCENE 2 ▼▼▼ -->
+            <div class="project-item">
+                <h4>Scene 2: [Project Name]</h4>
+                <p>[Description]</p>
+                <br>
+                <div class="img-placeholder" style="height:200px; margin: 8px 0;">
+                    Sketchfab embed goes here
+                </div>
+                <div class="img-grid-2">
+                    <div class="img-placeholder" style="height:120px;">Render 1</div>
+                    <div class="img-placeholder" style="height:120px;">Render 2</div>
                 </div>
             </div>
-            <div class="tab-content" id="graphics-tech-art-unity">
-                <h3>Unity Graphics Project</h3>
-                <div class="project-item">
-                    <strong>Project:</strong> Water Caustics and God Rays<br>
-                    <small>This project showcases a method of simulating water caustics and god rays using volumetric ray marching and 3D Worley noise.</small><br><br>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 10px 0;">
-                        <img src="path/to/unity-screenshot1.jpg" style="width: 100%;">
-                        <img src="path/to/unity-screenshot2.jpg" style="width: 100%;">
-                        <img src="path/to/unity-screenshot3.jpg" style="width: 100%;">
-                        <img src="path/to/unity-screenshot4.jpg" style="width: 100%;">
-                    </div>
-                    <a href="https://github.com/raihansyahdean/Water-Light-Graphics-Project" target="_blank">
-                        <button style="padding: 8px 16px;">View on GitHub</button>
-                    </a>
-                </div>
+            <!-- ▲▲▲ END SCENE 2 ▲▲▲ -->
+
+        </div>
+
+        <!-- ── ANIMATIONS TAB ── -->
+        <div class="tab-content" id="3d-art-animations">
+            <h3>3D Animations</h3>
+
+            <!-- ▼▼▼ ANIMATION 1: Brand New Broom ▼▼▼ -->
+            <div class="project-item">
+                <h4>Animation 1: Brand New Broom</h4>
+                <!-- ▼▼▼ WIZARD/BROOM DESCRIPTION ▼▼▼ -->
+                <p>[Add description of the Brand New Broom animation — character, story, techniques used.]</p>
+                <!-- ▲▲▲ END DESCRIPTION ▲▲▲ -->
+                <br>
+                <iframe width="100%" height="280" src="https://www.youtube.com/embed/zZGdN4yVD6E"
+                        frameborder="0" allowfullscreen style="margin: 6px 0;"></iframe>
+            </div>
+            <!-- ▲▲▲ END ANIMATION 1 ▲▲▲ -->
+
+            <!-- ▼▼▼ ANIMATION 2: A Fox and his Ball ▼▼▼ -->
+            <div class="project-item">
+                <h4>Animation 2: A Fox and His Ball</h4>
+                <!-- ▼▼▼ FOX DESCRIPTION ▼▼▼ -->
+                <p>[Add description of A Fox and His Ball — mood, rigging notes, software used, etc.]</p>
+                <!-- ▲▲▲ END DESCRIPTION ▲▲▲ -->
+                <br>
+                <iframe width="100%" height="280" src="https://www.youtube.com/embed/YYwnx12hpyw"
+                        frameborder="0" allowfullscreen style="margin: 6px 0;"></iframe>
+            </div>
+            <!-- ▲▲▲ END ANIMATION 2 ▲▲▲ -->
+
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     TASKBAR
+═══════════════════════════════════════════ -->
+<div class="taskbar">
+    <div class="start-button">Start</div>
+    <div class="taskbar-divider"></div>
+    <div class="mode-toggle" onclick="toggleMode()">Switch to Modern View</div>
+    <div class="music-icon" onclick="openSpotify()" title="Music Player">🎵</div>
+    <div class="taskbar-time" id="time"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SPOTIFY PLAYER
+═══════════════════════════════════════════ -->
+<div class="spotify-player" id="spotify-player" style="display:none;">
+    <div class="spotify-title-bar" onmousedown="dragStart(event, 'spotify-player')"
+         ontouchstart="touchDragStart(event, 'spotify-player')">
+        <span>🎵 Now Playing</span>
+        <div class="title-bar-buttons">
+            <div class="title-bar-button" onclick="toggleSpotify()">_</div>
+            <div class="title-bar-button" onclick="closeSpotify()">✕</div>
+        </div>
+    </div>
+    <div class="spotify-content">
+        <!--
+            NOTE ON AUTOPLAY: Browser security policies prevent audio autoplay
+            without user interaction. The player will load paused — this is a
+            browser limitation, not a bug. Users must click play manually.
+
+            NOTE ON PREVIEWS: The Spotify embed shows 30-second previews for
+            non-logged-in users. Logged-in Spotify users get full tracks.
+            You cannot override this — it's Spotify's policy.
+        -->
+        <iframe id="spotify-iframe"
+                style="border-radius: 12px; display: block;"
+                src="https://open.spotify.com/embed/playlist/5TOfvEvIr9y5SWbsCx4Dh8?utm_source=generator"
+                width="300"
+                height="152"
+                frameBorder="0"
+                allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy">
+        </iframe>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MODERN MODE
+═══════════════════════════════════════════ -->
+<div class="modern-container">
+    <div class="toggle-fixed">
+        <div class="mode-toggle" onclick="toggleMode()">Switch to Retro View</div>
+    </div>
+
+    <div class="modern-header">
+        <h1>Thomas Shalosky</h1>
+        <p>Game Developer | Technical Artist | Graphics Programmer</p>
+    </div>
+
+    <div class="modern-section">
+        <h2>Graphics Programming / Technical Art</h2>
+        <h3 style="margin-top: 24px; font-size: 20px; color: #aaa;">C++ Projects</h3>
+        <div class="modern-grid">
+            <div class="modern-card">
+                <h3>C++ Project 1</h3>
+                <p>[Description]</p>
+            </div>
+            <div class="modern-card">
+                <h3>C++ Project 2</h3>
+                <p>[Description]</p>
+            </div>
+        </div>
+        <h3 style="margin-top: 24px; font-size: 20px; color: #aaa;">Unity Graphics Project</h3>
+        <div class="modern-grid">
+            <div class="modern-card">
+                <h3>Water Caustics and God Rays</h3>
+                <p>Volumetric ray marching and 3D Worley noise simulation.</p>
             </div>
         </div>
     </div>
 
-    <!-- Game Design Window -->
-    <div class="window" id="window-game-design" style="left: 150px; top: 150px;">
-        <div class="title-bar" onmousedown="dragStart(event, 'window-game-design')">
-            <span>Game Design</span>
-            <div class="title-bar-buttons">
-                <div class="title-bar-button" onclick="closeWindow('game-design')">✕</div>
+    <div class="modern-section">
+        <h2>Game Design</h2>
+        <h3 style="margin-top: 24px; font-size: 20px; color: #aaa;">Video Game</h3>
+        <div class="modern-grid">
+            <div class="modern-card">
+                <h3>Purple Team</h3>
+                <p>[Description]</p>
+                <br>
+                <a href="https://tshalosky13.itch.io/purple-team" target="_blank"
+                   style="color: #4a9eff;">Play on itch.io ↗</a>
             </div>
         </div>
-        <div class="tabs">
-            <div class="tab active" onclick="switchTab(event, 'game-design', 'video-game')">Video Game</div>
-            <div class="tab" onclick="switchTab(event, 'game-design', 'board-games')">Board Games</div>
-        </div>
-        <div class="window-content">
-            <div class="tab-content active" id="game-design-video-game">
-                <h3>Video Game</h3>
-                <div class="project-item">
-                    <strong>Game:</strong> Purple Team<br>
-                    <small>Description here</small><br><br>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 10px;">
-                        <img src="path/to/screenshot1.jpg" style="width: 100%;">
-                        <img src="path/to/screenshot2.jpg" style="width: 100%;">
-                    </div>
-                    <a href="https://tshalosky13.itch.io/purple-team" target="_blank">
-                        <button style="padding: 8px 16px; margin-right: 10px;">Play on itch.io</button>
-                    </a>
-                    <button style="padding: 8px 16px;">Download (Windows)</button>
-                </div>
-            </div>
-            <div class="tab-content" id="game-design-board-games">
-                <h3>Board Games</h3>
-                <div class="project-item">
-                    <strong>Board Game 1:</strong> [Title]<br>
-                    <small>Brief description</small><br><br>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0;">
-                        <img src="path/to/bg1-photo1.jpg" style="width: 100%;">
-                        <img src="path/to/bg1-photo2.jpg" style="width: 100%;">
-                        <img src="path/to/bg1-photo3.jpg" style="width: 100%;">
-                    </div>
-                    <button style="padding: 5px 10px; margin-right: 10px;">View Rules (PDF)</button>
-                    <button style="padding: 5px 10px;">Design Journal (PDF)</button>
-                </div>
-                <div class="project-item">
-                    <strong>Board Game 2:</strong> [Title]<br>
-                    <small>Brief description</small><br><br>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0;">
-                        <img src="path/to/bg2-photo1.jpg" style="width: 100%;">
-                        <img src="path/to/bg2-photo2.jpg" style="width: 100%;">
-                        <img src="path/to/bg2-photo3.jpg" style="width: 100%;">
-                    </div>
-                    <button style="padding: 5px 10px; margin-right: 10px;">View Rules (PDF)</button>
-                    <button style="padding: 5px 10px;">Design Journal (PDF)</button>
-                </div>
-                <div class="project-item">
-                    <strong>Board Game 3:</strong> [Title]<br>
-                    <small>Brief description</small><br><br>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0;">
-                        <img src="path/to/bg3-photo1.jpg" style="width: 100%;">
-                        <img src="path/to/bg3-photo2.jpg" style="width: 100%;">
-                        <img src="path/to/bg3-photo3.jpg" style="width: 100%;">
-                    </div>
-                    <button style="padding: 5px 10px; margin-right: 10px;">View Rules (PDF)</button>
-                    <button style="padding: 5px 10px;">Design Journal (PDF)</button>
-                </div>
-            </div>
+        <h3 style="margin-top: 24px; font-size: 20px; color: #aaa;">Board Games</h3>
+        <div class="modern-grid">
+            <div class="modern-card"><h3>Board Game 1</h3><p>[Description]</p></div>
+            <div class="modern-card"><h3>Board Game 2</h3><p>[Description]</p></div>
+            <div class="modern-card"><h3>Board Game 3</h3><p>[Description]</p></div>
         </div>
     </div>
 
-    <!-- 3D Art Window -->
-    <div class="window" id="window-3d-art" style="left: 200px; top: 120px;">
-        <div class="title-bar" onmousedown="dragStart(event, 'window-3d-art')">
-            <span>3D Art</span>
-            <div class="title-bar-buttons">
-                <div class="title-bar-button" onclick="closeWindow('3d-art')">✕</div>
-            </div>
+    <div class="modern-section">
+        <h2>3D Art</h2>
+        <h3 style="margin-top: 24px; font-size: 20px; color: #aaa;">3D Scenes</h3>
+        <div class="modern-grid">
+            <div class="modern-card"><h3>Scene 1</h3><p>[Description]</p></div>
+            <div class="modern-card"><h3>Scene 2</h3><p>[Description]</p></div>
         </div>
-        <div class="tabs">
-            <div class="tab active" onclick="switchTab(event, '3d-art', 'scenes')">3D Scenes</div>
-            <div class="tab" onclick="switchTab(event, '3d-art', 'animations')">Animations</div>
-        </div>
-        <div class="window-content">
-            <div class="tab-content active" id="3d-art-scenes">
-                <h3>3D Modeled Scenes</h3>
-                <div class="project-item">
-                    <strong>Scene 1:</strong> [Project Name]<br>
-                    <small>Description here</small><br><br>
-                    <iframe src="https://sketchfab.com/models/YOUR_MODEL_ID/embed" width="100%" height="400" frameborder="0"></iframe>
-                    <br><br>
-                    <video controls width="100%" style="max-width: 640px;">
-                        <source src="path/to/scene1-video.mp4" type="video/mp4">
-                    </video>
-                    <br>
-                    <button style="margin-top: 10px; padding: 5px 10px;">Download Scene Files</button>
-                </div>
-                <div class="project-item">
-                    <strong>Scene 2:</strong> [Project Name]<br>
-                    <small>Description here</small><br><br>
-                    <iframe src="https://sketchfab.com/models/YOUR_MODEL_ID/embed" width="100%" height="400" frameborder="0"></iframe>
-                    <br>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
-                        <img src="path/to/scene2-img1.jpg" style="width: 100%;">
-                        <img src="path/to/scene2-img2.jpg" style="width: 100%;">
-                    </div>
-                    <br>
-                    <button style="margin-top: 10px; padding: 5px 10px;">Download Scene Files</button>
-                </div>
+        <h3 style="margin-top: 24px; font-size: 20px; color: #aaa;">Animations</h3>
+        <div class="modern-grid">
+            <div class="modern-card">
+                <h3>Brand New Broom</h3>
+                <p>[Description]</p>
+                <br>
+                <a href="https://www.youtube.com/watch?v=zZGdN4yVD6E" target="_blank"
+                   style="color: #4a9eff;">Watch on YouTube ↗</a>
             </div>
-            <div class="tab-content" id="3d-art-animations">
-                <h3>3D Animations</h3>
-                <div class="project-item">
-                    <strong>Animation 1:</strong> Brand New Broom<br>
-                    <small>Description here</small><br><br>
-                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/zZGdN4yVD6E" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <div class="project-item">
-                    <strong>Animation 2:</strong> A Fox and his Ball<br>
-                    <small>Description here</small><br><br>
-                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/YYwnx12hpyw" frameborder="0" allowfullscreen></iframe>
-                </div>
+            <div class="modern-card">
+                <h3>A Fox and His Ball</h3>
+                <p>[Description]</p>
+                <br>
+                <a href="https://www.youtube.com/watch?v=YYwnx12hpyw" target="_blank"
+                   style="color: #4a9eff;">Watch on YouTube ↗</a>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Modern Mode -->
-    <div class="modern-container">
-        <div class="toggle-fixed">
-            <div class="mode-toggle" onclick="toggleMode()">Switch to Retro View</div>
-        </div>
-
-        <div class="modern-header">
-            <h1>Thomas Shalosky</h1>
-            <p>Game Developer | Technical Artist | Graphics Programmer</p>
-        </div>
-
-        <div class="modern-section">
-            <h2>Graphics Programming / Technical Art</h2>
-            <h3 style="margin-top: 30px; font-size: 24px;">C++ Graphics Projects</h3>
-            <div class="modern-grid">
-                <div class="modern-card">
-                    <h3>C++ Project 1</h3>
-                    <p>Description and demo.</p>
-                </div>
-                <div class="modern-card">
-                    <h3>C++ Project 2</h3>
-                    <p>Description and demo.</p>
-                </div>
-            </div>
-            <h3 style="margin-top: 30px; font-size: 24px;">Unity Graphics Project</h3>
-            <div class="modern-grid">
-                <div class="modern-card">
-                    <h3>Water Caustics and God Rays</h3>
-                    <p>Volumetric ray marching and 3D Worley noise simulation.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="modern-section">
-            <h2>Game Design</h2>
-            <h3 style="margin-top: 30px; font-size: 24px;">Video Game</h3>
-            <div class="modern-grid">
-                <div class="modern-card">
-                    <h3>Purple Team</h3>
-                    <p>Your video game project details.</p>
-                </div>
-            </div>
-            <h3 style="margin-top: 30px; font-size: 24px;">Board Games</h3>
-            <div class="modern-grid">
-                <div class="modern-card">
-                    <h3>Board Game 1</h3>
-                    <p>Description</p>
-                </div>
-                <div class="modern-card">
-                    <h3>Board Game 2</h3>
-                    <p>Description</p>
-                </div>
-                <div class="modern-card">
-                    <h3>Board Game 3</h3>
-                    <p>Description</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="modern-section">
-            <h2>3D Art</h2>
-            <h3 style="margin-top: 30px; font-size: 24px;">3D Modeled Scenes</h3>
-            <div class="modern-grid">
-                <div class="modern-card">
-                    <h3>Scene 1</h3>
-                    <p>Description of your first 3D scene project.</p>
-                </div>
-                <div class="modern-card">
-                    <h3>Scene 2</h3>
-                    <p>Description of your second 3D scene project.</p>
-                </div>
-            </div>
-            <h3 style="margin-top: 30px; font-size: 24px;">3D Animations</h3>
-            <div class="modern-grid">
-                <div class="modern-card">
-                    <h3>Brand New Broom</h3>
-                    <p>Details about your first animation.</p>
-                </div>
-                <div class="modern-card">
-                    <h3>A Fox and his Ball</h3>
-                    <p>Details about your second animation.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="js/main.js"></script>
-    <script src="js/spotify.js"></script>
-    <script src="js/holiday-themes.js"></script>
-    </body>
+<script src="js/main.js"></script>
+<script src="js/spotify.js"></script>
+<script src="js/holiday-themes.js"></script>
+</body>
 </html>

@@ -35,6 +35,10 @@ let themeMode = 'auto';
 let intensity = 'subtle';
 let particleInterval = null;
 
+function isModernMode() {
+    return document.body.classList.contains('modern-mode');
+}
+
 function getCurrentHoliday() {
     const now = new Date();
     const month = now.getMonth();
@@ -51,7 +55,6 @@ function getCurrentHoliday() {
 }
 
 function applyTheme(theme) {
-    // Remove all theme classes
     document.body.className = document.body.className.replace(/theme-\w+/g, '').trim();
 
     if (theme !== 'none') {
@@ -61,7 +64,8 @@ function applyTheme(theme) {
     currentTheme = theme;
     updateThemeDisplay();
 
-    if (intensity === 'full' && theme !== 'none') {
+    // Only show particles in retro mode
+    if (intensity === 'full' && theme !== 'none' && !isModernMode()) {
         startParticles(theme);
     } else {
         stopParticles();
@@ -97,7 +101,7 @@ function updateIntensity() {
     updateThemeDisplay();
 
     if (currentTheme !== 'none') {
-        if (intensity === 'full') {
+        if (intensity === 'full' && !isModernMode()) {
             startParticles(currentTheme);
         } else {
             stopParticles();
@@ -108,14 +112,34 @@ function updateIntensity() {
 }
 
 function updateThemeDisplay() {
-    document.getElementById('currentThemeDisplay').textContent =
+    const display = document.getElementById('currentThemeDisplay');
+    const intensityDisplay = document.getElementById('currentIntensityDisplay');
+    if (display) display.textContent =
         currentTheme === 'none' ? 'Default' : currentTheme.charAt(0).toUpperCase() + currentTheme.slice(1);
-    document.getElementById('currentIntensityDisplay').textContent =
+    if (intensityDisplay) intensityDisplay.textContent =
         intensity.charAt(0).toUpperCase() + intensity.slice(1);
 }
 
+// Stop/start particles when toggling mode
+const originalToggleMode = window.toggleMode;
+// Hook into mode toggle to pause particles in modern mode
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('mode-toggle')) {
+        setTimeout(() => {
+            if (isModernMode()) {
+                stopParticles();
+            } else if (intensity === 'full' && currentTheme !== 'none') {
+                startParticles(currentTheme);
+            }
+        }, 50);
+    }
+});
+
 // Particle Effects
 function createParticle(theme) {
+    // Don't create particles if in modern mode
+    if (isModernMode()) return;
+
     const container = document.getElementById('particles');
     const particle = document.createElement('div');
     particle.className = 'particle';
@@ -128,7 +152,6 @@ function createParticle(theme) {
     particle.style.top = '-20px';
     particle.style.fontSize = size + 'px';
 
-    // Set particle character based on type
     const symbols = {
         bat: '🦇',
         leaf: '🍂',
@@ -140,16 +163,19 @@ function createParticle(theme) {
     };
 
     particle.textContent = symbols[config.type] || '⭐';
-
     container.appendChild(particle);
 
-    // Animate particle falling
     let posY = -20;
     let currentX = startX;
     const fallSpeed = Math.random() * 2 + 1;
     const drift = (Math.random() - 0.5) * 2;
 
     const fall = setInterval(() => {
+        if (isModernMode()) {
+            clearInterval(fall);
+            particle.remove();
+            return;
+        }
         posY += fallSpeed;
         currentX += drift;
         particle.style.top = posY + 'px';
@@ -167,6 +193,7 @@ function startParticles(theme) {
     const config = holidayThemes[theme].particles;
 
     particleInterval = setInterval(() => {
+        if (isModernMode()) return; // Guard in the interval too
         if (document.querySelectorAll('.particle').length < config.count) {
             createParticle(theme);
         }
@@ -181,7 +208,6 @@ function stopParticles() {
     document.getElementById('particles').innerHTML = '';
 }
 
-// Save preferences to localStorage
 function savePreferences() {
     localStorage.setItem('themeMode', themeMode);
     localStorage.setItem('intensity', intensity);
@@ -190,18 +216,19 @@ function savePreferences() {
     }
 }
 
-// Load preferences from localStorage
 function loadPreferences() {
     const savedMode = localStorage.getItem('themeMode');
     const savedIntensity = localStorage.getItem('intensity');
 
     if (savedMode) {
         themeMode = savedMode;
-        document.querySelector(`input[value="${savedMode}"]`).checked = true;
+        const modeInput = document.querySelector(`input[value="${savedMode}"]`);
+        if (modeInput) modeInput.checked = true;
         if (savedMode === 'manual') {
             const savedTheme = localStorage.getItem('manualTheme');
             if (savedTheme) {
-                document.getElementById('themeSelector').value = savedTheme;
+                const sel = document.getElementById('themeSelector');
+                if (sel) sel.value = savedTheme;
             }
         }
         updateThemeMode();
@@ -209,16 +236,15 @@ function loadPreferences() {
 
     if (savedIntensity) {
         intensity = savedIntensity;
-        document.querySelector(`input[name="intensity"][value="${savedIntensity}"]`).checked = true;
+        const intensityInput = document.querySelector(`input[name="intensity"][value="${savedIntensity}"]`);
+        if (intensityInput) intensityInput.checked = true;
         updateIntensity();
     }
 }
 
-// Initialize on page load
 window.addEventListener('load', () => {
     applyTheme(getCurrentHoliday());
     updateThemeDisplay();
 });
 
-// Load saved preferences on startup
 window.addEventListener('DOMContentLoaded', loadPreferences);

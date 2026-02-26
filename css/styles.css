@@ -12,14 +12,14 @@ body {
     transition: background 0.5s ease;
 }
 
-/* Holiday Themes */
-body.theme-halloween { background: #1a0f00; }
-body.theme-thanksgiving { background: #4a2c0f; }
-body.theme-winter { background: #0f1a2e; }
-body.theme-valentine { background: #2e0f1a; }
-body.theme-stpatrick { background: #0f2e1a; }
-body.theme-birthday { background: #2e1a0f; }
-body.theme-july4th { background: #1a1a2e; }
+/* Holiday Themes — lighter than before so text/icons are readable */
+body.theme-halloween    { background: #5a3010; }
+body.theme-thanksgiving { background: #7a4f20; }
+body.theme-winter       { background: #2a4a6e; }
+body.theme-valentine    { background: #6e2a3a; }
+body.theme-stpatrick    { background: #1a5c30; }
+body.theme-birthday     { background: #5c3a10; }
+body.theme-july4th      { background: #2a2a5c; }
 
 /* Desktop */
 .desktop {
@@ -43,12 +43,17 @@ body.theme-july4th { background: #1a1a2e; }
     z-index: 9999;
 }
 
+/* Hide particles in modern mode */
+body.modern-mode .particles {
+    display: none;
+}
+
 .particle {
     position: absolute;
     pointer-events: none;
 }
 
-/* Settings Window */
+/* Settings Icon */
 .settings-icon {
     position: fixed;
     top: 10px;
@@ -70,6 +75,7 @@ body.theme-july4th { background: #1a1a2e; }
     border-color: #000 #fff #fff #000;
 }
 
+/* Desktop Icons */
 .icon {
     width: 80px;
     text-align: center;
@@ -77,8 +83,8 @@ body.theme-july4th { background: #1a1a2e; }
     user-select: none;
 }
 
-.icon:active {
-    filter: brightness(1.2);
+.icon:active .icon-image {
+    filter: brightness(1.3);
 }
 
 .icon-image {
@@ -92,16 +98,24 @@ body.theme-july4th { background: #1a1a2e; }
     justify-content: center;
     font-size: 24px;
     transition: background 0.3s;
+    overflow: hidden;
+}
+
+.icon-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: pixelated;
 }
 
 /* Holiday icon decorations */
-body.theme-halloween .icon-image { background: #ff6b1a; }
+body.theme-halloween    .icon-image { background: #ff8c42; }
 body.theme-thanksgiving .icon-image { background: #d4a574; }
-body.theme-winter .icon-image { background: #b8d4ff; }
-body.theme-valentine .icon-image { background: #ffb8d4; }
-body.theme-stpatrick .icon-image { background: #90ee90; }
-body.theme-birthday .icon-image { background: #ffd700; }
-body.theme-july4th .icon-image { background: #ff6b6b; }
+body.theme-winter       .icon-image { background: #b8d4ff; }
+body.theme-valentine    .icon-image { background: #ffb8d4; }
+body.theme-stpatrick    .icon-image { background: #90ee90; }
+body.theme-birthday     .icon-image { background: #ffd700; }
+body.theme-july4th      .icon-image { background: #ff8888; }
 
 .icon-label {
     color: white;
@@ -122,6 +136,8 @@ body.theme-july4th .icon-image { background: #ff6b6b; }
     box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
     resize: both;
     overflow: hidden;
+    min-width: 300px;
+    min-height: 200px;
 }
 
 .window.active {
@@ -141,16 +157,19 @@ body.theme-july4th .icon-image { background: #ff6b6b; }
     font-weight: bold;
     font-size: 12px;
     transition: background 0.3s;
+    flex-shrink: 0;
+    touch-action: none;
+    user-select: none;
 }
 
 /* Holiday title bars */
-body.theme-halloween .title-bar { background: linear-gradient(to right, #ff6b1a, #ff8c42); }
+body.theme-halloween    .title-bar { background: linear-gradient(to right, #cc5500, #ff8c42); }
 body.theme-thanksgiving .title-bar { background: linear-gradient(to right, #8b4513, #d2691e); }
-body.theme-winter .title-bar { background: linear-gradient(to right, #4169e1, #87ceeb); }
-body.theme-valentine .title-bar { background: linear-gradient(to right, #ff1493, #ff69b4); }
-body.theme-stpatrick .title-bar { background: linear-gradient(to right, #228b22, #90ee90); }
-body.theme-birthday .title-bar { background: linear-gradient(to right, #ff1493, #ffd700); }
-body.theme-july4th .title-bar { background: linear-gradient(to right, #b22234, #3c3b6e); }
+body.theme-winter       .title-bar { background: linear-gradient(to right, #1e4db7, #87ceeb); }
+body.theme-valentine    .title-bar { background: linear-gradient(to right, #cc0066, #ff69b4); }
+body.theme-stpatrick    .title-bar { background: linear-gradient(to right, #1a6b22, #55cc55); }
+body.theme-birthday     .title-bar { background: linear-gradient(to right, #cc0080, #ffd700); }
+body.theme-july4th      .title-bar { background: linear-gradient(to right, #8b1a1a, #3c3b8e); }
 
 .title-bar-buttons {
     display: flex;
@@ -170,6 +189,7 @@ body.theme-july4th .title-bar { background: linear-gradient(to right, #b22234, #
     cursor: pointer;
     font-weight: bold;
     color: #000;
+    flex-shrink: 0;
 }
 
 .title-bar-button:active {
@@ -184,20 +204,13 @@ body.theme-july4th .title-bar { background: linear-gradient(to right, #b22234, #
     background: white;
 }
 
-.window-content::-webkit-scrollbar {
-    width: 16px;
-}
-
-.window-content::-webkit-scrollbar-track {
-    background: #c0c0c0;
-}
-
+.window-content::-webkit-scrollbar { width: 16px; }
+.window-content::-webkit-scrollbar-track { background: #c0c0c0; }
 .window-content::-webkit-scrollbar-thumb {
     background: #808080;
     border: 1px solid;
     border-color: #dfdfdf #000 #000 #dfdfdf;
 }
-
 .window-content::-webkit-scrollbar-button {
     background: #c0c0c0;
     border: 1px solid;
@@ -210,6 +223,8 @@ body.theme-july4th .title-bar { background: linear-gradient(to right, #b22234, #
     display: flex;
     background: #c0c0c0;
     border-bottom: 2px solid #808080;
+    flex-shrink: 0;
+    flex-wrap: wrap;
 }
 
 .tab {
@@ -231,29 +246,42 @@ body.theme-july4th .title-bar { background: linear-gradient(to right, #b22234, #
     z-index: 1;
 }
 
-.tab:hover:not(.active) {
-    background: #d4d4d4;
-}
+.tab:hover:not(.active) { background: #d4d4d4; }
 
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 
 .project-item {
     padding: 10px;
-    margin: 5px 0;
+    margin: 8px 0;
     background: #f0f0f0;
     border: 1px solid #999;
-    cursor: pointer;
 }
 
-.project-item:hover {
-    background: #e0e0e0;
+.project-item h4 {
+    margin-bottom: 6px;
+    font-size: 13px;
 }
+
+.project-item p, .project-item small {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #333;
+}
+
+/* Retro button style */
+.retro-btn {
+    padding: 5px 12px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #fff #000 #000 #fff;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: inherit;
+    margin: 3px;
+}
+.retro-btn:active { border-color: #000 #fff #fff #000; }
+.retro-btn:hover { background: #d4d4d4; }
 
 /* Taskbar */
 .taskbar {
@@ -269,6 +297,7 @@ body.theme-july4th .title-bar { background: linear-gradient(to right, #b22234, #
     align-items: center;
     padding: 2px;
     gap: 5px;
+    z-index: 9998;
 }
 
 .start-button {
@@ -283,16 +312,10 @@ body.theme-july4th .title-bar { background: linear-gradient(to right, #b22234, #
     align-items: center;
     gap: 5px;
     font-size: 13px;
+    white-space: nowrap;
 }
-
-.start-button:active {
-    border-color: #000 #fff #fff #000;
-}
-
-.start-button::before {
-    content: '⊞';
-    font-size: 20px;
-}
+.start-button:active { border-color: #000 #fff #fff #000; }
+.start-button::before { content: '⊞'; font-size: 20px; }
 
 .taskbar-divider {
     width: 2px;
@@ -308,6 +331,7 @@ body.theme-july4th .title-bar { background: linear-gradient(to right, #b22234, #
     display: flex;
     align-items: center;
     font-size: 11px;
+    white-space: nowrap;
 }
 
 .music-icon {
@@ -318,10 +342,7 @@ body.theme-july4th .title-bar { background: linear-gradient(to right, #b22234, #
     cursor: pointer;
     font-size: 16px;
 }
-
-.music-icon:hover {
-    background: #d4d4d4;
-}
+.music-icon:hover { background: #d4d4d4; }
 
 .mode-toggle {
     padding: 5px 10px;
@@ -330,18 +351,26 @@ body.theme-july4th .title-bar { background: linear-gradient(to right, #b22234, #
     border-color: #fff #000 #000 #fff;
     cursor: pointer;
     font-size: 11px;
+    white-space: nowrap;
 }
+.mode-toggle:active { border-color: #000 #fff #fff #000; }
 
-/* Modern mode */
+/* ─── Modern Mode ─────────────────────────────────────────── */
 body.modern-mode {
     background: #1a1a1a;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 body.modern-mode .desktop,
 body.modern-mode .taskbar,
-body.modern-mode .settings-icon {
+body.modern-mode .settings-icon,
+body.modern-mode .spotify-player {
     display: none;
+}
+
+body.modern-mode .window {
+    display: none !important;
 }
 
 .modern-container {
@@ -352,9 +381,7 @@ body.modern-mode .settings-icon {
     color: white;
 }
 
-body.modern-mode .modern-container {
-    display: block;
-}
+body.modern-mode .modern-container { display: block; }
 
 .modern-header {
     text-align: center;
@@ -392,9 +419,7 @@ body.modern-mode .modern-container {
     transition: transform 0.2s;
 }
 
-.modern-card:hover {
-    transform: translateY(-5px);
-}
+.modern-card:hover { transform: translateY(-5px); }
 
 .modern-card h3 {
     margin-bottom: 10px;
@@ -408,21 +433,25 @@ body.modern-mode .modern-container {
     z-index: 1000;
 }
 
+body.modern-mode .toggle-fixed .mode-toggle {
+    background: #333;
+    color: white;
+    border-color: #666 #222 #222 #666;
+}
+
 /* Spotify Player */
 .spotify-player {
-    position: absolute;
-    left: auto;
-    top: auto;
-    z-index: 50;
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+    z-index: 5000;
     background: #c0c0c0;
     border: 2px solid;
     border-color: #dfdfdf #000 #000 #dfdfdf;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
 }
 
-.spotify-player.minimized .spotify-content {
-    display: none;
-}
+.spotify-player.minimized .spotify-content { display: none; }
 
 .spotify-title-bar {
     background: linear-gradient(to right, #000080, #1084d0);
@@ -434,21 +463,13 @@ body.modern-mode .modern-container {
     cursor: move;
     font-weight: bold;
     font-size: 12px;
+    touch-action: none;
+    user-select: none;
 }
 
-.spotify-content {
-    padding: 3px;
-}
+.spotify-content { padding: 3px; }
 
-body.modern-mode .spotify-player {
-    display: none;
-}
-
-body.modern-mode .window {
-    display: none !important;
-}
-
-/* Settings specific styles */
+/* Settings styles */
 .setting-group {
     margin: 15px 0;
     padding: 10px;
@@ -456,16 +477,185 @@ body.modern-mode .window {
     border: 1px solid #999;
 }
 
-.setting-group h4 {
-    margin-bottom: 10px;
-}
-
-.radio-group {
-    margin: 5px 0;
-}
+.setting-group h4 { margin-bottom: 10px; }
+.radio-group { margin: 5px 0; }
 
 select {
     padding: 5px;
     width: 100%;
     margin-top: 5px;
+}
+
+/* Image gallery grid */
+.img-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.img-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.img-grid-2 img,
+.img-grid-3 img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border: 1px solid #999;
+    cursor: pointer;
+}
+
+.img-grid-2 img:hover,
+.img-grid-3 img:hover {
+    border-color: #000080;
+    outline: 1px solid #000080;
+}
+
+/* Placeholder image boxes */
+.img-placeholder {
+    background: #d4d4d4;
+    border: 1px dashed #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #666;
+    text-align: center;
+    padding: 5px;
+}
+
+/* ─── MOBILE RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 768px) {
+    body {
+        overflow: auto;
+    }
+
+    /* On mobile, show a simplified list instead of desktop icons */
+    .desktop {
+        height: calc(100vh - 40px);
+        overflow-y: auto;
+        flex-wrap: wrap;
+        flex-direction: row;
+        padding: 15px;
+        gap: 15px;
+        align-content: flex-start;
+    }
+
+    .icon {
+        width: 70px;
+    }
+
+    .icon-image {
+        width: 52px;
+        height: 52px;
+        font-size: 28px;
+    }
+
+    /* Windows take full screen on mobile */
+    .window.active {
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100vw !important;
+        height: calc(100vh - 40px) !important;
+        resize: none;
+        z-index: 500 !important;
+    }
+
+    .title-bar {
+        padding: 6px 8px;
+        font-size: 13px;
+    }
+
+    .title-bar-button {
+        width: 24px;
+        height: 22px;
+        font-size: 14px;
+    }
+
+    .tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    }
+
+    .tab {
+        padding: 6px 12px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .window-content {
+        padding: 12px;
+    }
+
+    .img-grid-2,
+    .img-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Taskbar adjustments */
+    .taskbar {
+        padding: 2px 4px;
+        gap: 3px;
+    }
+
+    .start-button {
+        padding: 0 8px;
+        font-size: 11px;
+    }
+
+    .start-button::before {
+        font-size: 16px;
+    }
+
+    .mode-toggle {
+        font-size: 10px;
+        padding: 4px 6px;
+    }
+
+    /* Modern mode mobile */
+    .modern-header h1 {
+        font-size: 32px;
+    }
+
+    .modern-section h2 {
+        font-size: 24px;
+    }
+
+    .modern-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .toggle-fixed {
+        top: 10px;
+        right: 10px;
+    }
+
+    /* Spotify hidden on mobile retro — too cramped */
+    .spotify-player {
+        display: none;
+    }
+
+    .music-icon {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .icon {
+        width: 60px;
+    }
+
+    .icon-label {
+        font-size: 10px;
+    }
+
+    .modern-header h1 {
+        font-size: 26px;
+    }
 }
