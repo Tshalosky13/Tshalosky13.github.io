@@ -1,4 +1,4 @@
-const SPOTIFY_SRC = 'https://open.spotify.com/embed/playlist/5TOfvEvIr9y5SWbsCx4Dh8?utm_source=generator';
+const SPOTIFY_SRC = 'https://open.spotify.com/embed/album/388IqMks5iUvsKkijNMtht?utm_source=generator';
 
 function toggleSpotify() {
     const player = document.getElementById('spotify-player');
@@ -7,7 +7,8 @@ function toggleSpotify() {
 
 function closeSpotify() {
     const player = document.getElementById('spotify-player');
-    // Hide but DON'T clear the src — clearing causes the reopen bug
+    const iframe = document.getElementById('spotify-iframe');
+    iframe.src = '';
     player.style.display = 'none';
     player.classList.remove('minimized');
 }
@@ -15,16 +16,9 @@ function closeSpotify() {
 function openSpotify() {
     const player = document.getElementById('spotify-player');
     const iframe = document.getElementById('spotify-iframe');
-
-    // Restore src if it was ever cleared
-    if (!iframe.src || iframe.src === 'about:blank' || iframe.src === '') {
-        iframe.src = SPOTIFY_SRC;
-    }
-
+    iframe.src = SPOTIFY_SRC;
     player.style.display = 'block';
     player.classList.remove('minimized');
-
-    // Bring to front
     let highestZ = 0;
     document.querySelectorAll('.window, .spotify-player').forEach(el => {
         highestZ = Math.max(highestZ, parseInt(el.style.zIndex) || 0);

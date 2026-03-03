@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <link rel="icon" href="images/favicon.png" type="image/png">
+    <link rel="icon" href="images/icons/win95/favicon.png" type="image/png">
     <title>Thomas Shalosky Portfolio</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -14,23 +14,23 @@
 <!-- RETRO DESKTOP ICONS -->
 <div class="desktop" id="desktop">
     <div class="icon" onclick="openWindow('welcome')">
-        <div class="icon-image">📄</div>
+        <div class="icon-image"><img src="images/icons/win95/welcome.png" alt="Welcome"></div>
         <div class="icon-label">Welcome</div>
     </div>
     <div class="icon" onclick="openWindow('about')">
-        <div class="icon-image">👤</div>
+        <div class="icon-image"><img src="images/icons/win95/about.png" alt="About"></div>
         <div class="icon-label">About Me</div>
     </div>
     <div class="icon" onclick="openWindow('graphics-tech-art')">
-        <div class="icon-image">💻</div>
+        <div class="icon-image"><img src="images/icons/win95/computer.png" alt="Graphics"></div>
         <div class="icon-label">Graphics/Tech Art</div>
     </div>
     <div class="icon" onclick="openWindow('game-design')">
-        <div class="icon-image">🎮</div>
+        <div class="icon-image"><img src="images/icons/win95/controller.png" alt="Game Design"></div>
         <div class="icon-label">Game Design</div>
     </div>
     <div class="icon" onclick="openWindow('3d-art')">
-        <div class="icon-image">🎨</div>
+        <div class="icon-image"><img src="images/icons/win95/art.png" alt="3D Art"></div>
         <div class="icon-label">3D Art</div>
     </div>
 </div>
@@ -190,11 +190,13 @@
     <div class="start-menu-sidebar"><span>Thomas Shalosky</span></div>
     <div class="start-menu-items">
         <div class="start-menu-item" onclick="startMenuOpenMusic()">
-            <span class="start-menu-icon">🎵</span><span>Music Player</span>
+            <span class="start-menu-icon"><img src="images/icons/win95/music.png" alt="Music"></span>
+            <span>Music Player</span>
         </div>
         <div class="start-menu-divider"></div>
         <div class="start-menu-item" onclick="startMenuOpenSettings()">
-            <span class="start-menu-icon">⚙️</span><span>Settings</span>
+            <span class="start-menu-icon"><img src="images/icons/win95/settings.png" alt="Settings"></span>
+            <span>Settings</span>
         </div>
     </div>
 </div>
@@ -202,6 +204,7 @@
 <!-- TASKBAR -->
 <div class="taskbar">
     <div class="start-button" id="start-button" onclick="toggleStartMenu()">
+        <img src="images/icons/win95/start.png" alt="Start" style="width:20px;height:20px;object-fit:contain;">
         <span class="start-logo">Start</span>
     </div>
     <div class="taskbar-divider"></div>
@@ -210,7 +213,7 @@
 </div>
 
 <!-- SPOTIFY PLAYER -->
-<div class="spotify-player" id="spotify-player" style="display:none;">
+<div class="spotify-player" id="spotify-player" style="display:block;">
     <div class="spotify-title-bar" onmousedown="dragStart(event, 'spotify-player')" ontouchstart="touchDragStart(event, 'spotify-player')">
         <span>🎵 Now Playing</span>
         <div class="title-bar-buttons">
@@ -219,9 +222,9 @@
         </div>
     </div>
     <div class="spotify-content">
-        <iframe id="spotify-iframe" style="border-radius: 12px; display: block;"
-                src="https://open.spotify.com/embed/playlist/5TOfvEvIr9y5SWbsCx4Dh8?utm_source=generator"
-                width="300" height="152" frameBorder="0" allowfullscreen=""
+        <iframe id="spotify-iframe" data-testid="embed-iframe" style="border-radius:12px; display:block;"
+                src="https://open.spotify.com/embed/album/388IqMks5iUvsKkijNMtht?utm_source=generator"
+                width="100%" height="352" frameBorder="0" allowfullscreen=""
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                 loading="lazy"></iframe>
     </div>

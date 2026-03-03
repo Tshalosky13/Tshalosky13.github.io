@@ -48,18 +48,15 @@ function renderRetroWelcome() {
     if (!el) return;
     const w = PORTFOLIO.welcome;
     el.innerHTML = `
-        <h2>Welcome!</h2>
+        <h2 style="margin-bottom:16px;">Welcome!</h2>
         <p>${w.intro}</p>
-        <p style="margin-top:10px;">${w.description}</p>
-        <p style="margin-top:12px;">This portfolio showcases my work across multiple disciplines:</p>
-        <ul style="margin:8px 0 8px 20px;font-size:13px;">
-            <li><strong>Graphics Programming / Technical Art</strong> — C++ graphics projects and Unity shaders</li>
-            <li><strong>Game Design</strong> — Video and board game projects</li>
-            <li><strong>3D Art</strong> — Modeled scenes and animations</li>
+        <p style="margin-top:16px;">${w.description}</p>
+        <p style="margin-top:16px;">This portfolio showcases my work across multiple disciplines:</p>
+        <ul style="margin:12px 0 12px 20px;font-size:13px;line-height:2;">
+            ${w.bullets.map(b => `<li><strong>${b.label}</strong> — ${b.detail}</li>`).join('')}
         </ul>
-        <p>Click the desktop icons to explore, or check out <strong>About Me</strong> to learn about my background.</p>
-        <p style="margin-top:10px;">To see a cleaner layout, click <strong>Switch to Modern View</strong> in the taskbar.</p>
-        <p style="margin-top:12px;color:#555;font-size:11px;"><em>Tip: Drag and resize windows just like a real desktop! Open Start menu to access Settings and Music.</em></p>
+        <p style="margin-top:16px;color:#555;font-size:11px;"><em>${w.tip}</em></p>
+        <p style="margin-top:8px;color:#555;font-size:11px;"><em>${w.credits}</em></p>
     `;
 }
 
@@ -76,7 +73,7 @@ function renderRetroAbout() {
         <h2 style="text-align:center;">${p.name}</h2>
         <p style="text-align:center;"><em>${p.title}</em></p>
         <h3 style="margin-top:20px;">Bio</h3>
-        <p>${p.bio}</p>
+        ${p.bio.map(para => `<p style="margin-bottom:10px;">${para}</p>`).join('')}
         <h3 style="margin-top:20px;">Skills</h3>
         <ul style="margin-left:18px;font-size:13px;line-height:1.8;">
             ${p.skills.map(s => `<li>${s}</li>`).join('')}
@@ -84,7 +81,10 @@ function renderRetroAbout() {
         <h3 style="margin-top:20px;">Contact &amp; Links</h3>
         <p style="font-size:13px;line-height:2;">
             📧 <a href="mailto:${p.email}">${p.email}</a><br>
-            💼 <a href="${p.linkedin}" target="_blank">${p.linkedin.replace('https://', '')}</a>
+            💼 <a href="${p.linkedin}" target="_blank">${p.linkedin.replace('https://', '')}</a><br>
+            🐱 <a href="${p.github}" target="_blank">${p.github.replace('https://', '')}</a><br>
+            🎮 <a href="${p.itch}" target="_blank">${p.itch.replace('https://', '')}</a><br>
+            🗿 <a href="${p.sketchfab}" target="_blank">${p.sketchfab.replace('https://', '')}</a>
         </p>
         <div style="text-align:center;margin-top:30px;">
             <a href="${p.resume}" download>
