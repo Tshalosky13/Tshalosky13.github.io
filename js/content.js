@@ -110,7 +110,13 @@ const PORTFOLIO = {
     // ── GAME DESIGN ──────────────────────────────────────────
     purpleTeam: {
         title: "Purple Team",
-        description: "A semester-long FPS built with two teammates in my final semester at UNCW. The concept was a cybersecurity-themed Titanfall-inspired movement shooter — so the movement system I implemented covers sliding, wall running, wall climbing, clambering, and standard WASD movement, all tuned to feel fast and fluid. For the art direction I leaned into the cybersecurity concept and landed on Windows 95 as the visual language. The map is set in an old office, and the menus carry that through with a simulated Win95 desktop as the main menu background, UI windows that recreate the original Win95 chrome, and icons pulled from the original asset pack. I layered in some graffiti-style typography on top to give it a bit of edge.",
+        description: [
+            "This is a 1v1 king of the hill movement FPS built alongside two teammates in my final semester at UNCW for our game development class. The concept was a cybersecurity themed shooter where the players are people inside a computer, either trying to break in or defend it, which informed everything from the abilities to the art direction. It was my first time back in Unreal in years, with my teammates having no experience in it, and I ended up taking on most of the core systems as a result.",
+
+            "For the movement I aimed for a fluid system implementing sliding, wall running, wall climbing, and clambering in UE5 blueprints. I also built the base projectile weapon everything else was built off of, handled player scoring, death and respawning, built the king of the hill objective, and put together the movement section of our tutorial area.",
+
+            "For the abilities I designed the gameplay of both offensive and defensive pickups around cybersecurity concepts, things like a DDoS that covers your opponent's screen, malware that reverses their controls, and a firewall that places a physical wall in the level. The art direction was where I had the most fun, landing on a Windows 95 aesthetic for the menus and UI to match the cybersecurity theme and adding graffiti style typography to give it a unique spin. The scope ended up being too large for our team and timeline, but it was a great lesson in making hard calls under a deadline and shipping something even when it is not where you wanted it to be.",
+        ],
         images: [
             { src: "images/purple_team/temp.jpg", alt: "Purple Team Screenshot 1" },
             { src: "images/purple_team/temp.jpg", alt: "Purple Team Screenshot 2" },
@@ -118,7 +124,24 @@ const PORTFOLIO = {
             { src: "images/purple_team/temp.jpg", alt: "Purple Team Screenshot 4" },
         ],
         itchUrl: "https://tshalosky13.itch.io/purple-team",
-        downloadUrl: "downloads/PurpleTeam-Windows.zip",  // or "" to hide the button
+        downloadUrl: "downloadables/Purple Team.zip",  // or "" to hide the button
+
+        reflection: [
+            "Looking back, Purple Team was a hard project but one I am genuinely proud of shipping. Seeing players " +
+            "at the UNCW computing showcase actually having fun with it, and getting positive feedback from " +
+            "professors, meant a lot given how difficult the development process was. The parts I am most proud " +
+            "of are the ability design, which I think are unique and pretty fun to play around with, and the art " +
+            "direction, the Windows 95 aesthetic felt like a perfect fit for the concept and was not something I " +
+            "had seen a lot of at the time.",
+
+            "If I were to do it again I would scope it way down, or maybe pick a simpler game concept entirely. " +
+            "Multiplayer was by far the hardest part of the project and ate up a huge amount of time that could " +
+            "have gone toward polish. For example, I had spent a week and a half out of the semester implementing " +
+            "a full LAN system for people on other PCs to play together that ended up getting cut for being too " +
+            "difficult to implement. A tighter single player experience probably would have led to a much more " +
+            "finished feeling game. That said, even in its rough state there is genuine fun to be had when you sit " +
+            "down with someone and play it, and fun was always the most important goal to me.",
+        ],
     },
 
     boardGames: [

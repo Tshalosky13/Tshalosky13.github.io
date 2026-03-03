@@ -52,6 +52,23 @@ function renderDescription(description, modern = false) {
     return `<p>${description}</p>`;
 }
 
+// Renders an optional reflection section — only shows if reflection is filled in
+function renderReflection(reflection, modern = false) {
+    if (!reflection) return '';
+    if (modern) {
+        return `
+            <div style="margin-top:16px;padding-top:12px;border-top:1px solid #444;">
+                <h4 style="color:#aaa;margin-bottom:8px;">Reflection</h4>
+                ${renderDescription(reflection, true)}
+            </div>`;
+    }
+    return `
+        <div style="margin-top:12px;padding-top:10px;border-top:1px dashed #999;">
+            <h4 style="margin-bottom:6px;font-size:12px;">Reflection</h4>
+            ${renderDescription(reflection)}
+        </div>`;
+}
+
 // ── RETRO RENDERS ─────────────────────────────────────────────
 
 function renderRetroWelcome() {
@@ -112,6 +129,7 @@ function renderRetroCpp() {
         <div class="project-item">
             <h4>${proj.title}</h4>
             ${renderDescription(proj.description)}
+            ${renderReflection(proj.reflection)}
             <br>
             ${proj.youtubeId ? `<iframe width="100%" height="220" src="https://www.youtube.com/embed/${proj.youtubeId}" frameborder="0" allowfullscreen style="margin:8px 0;"></iframe>` : ''}
             ${imgGrid(proj.images, 2, 2, 'Screenshot')}
@@ -130,6 +148,7 @@ function renderRetroCaustics() {
         <div class="project-item">
             <h4>${c.title}</h4>
             ${renderDescription(c.description)}
+            ${renderReflection(c.reflection)}
             <br>
             ${imgGrid(c.images, 2, 4, 'Caustics Screenshot')}
             <div style="margin-top:8px;">
@@ -153,6 +172,7 @@ function renderRetroPurpleTeam() {
                 ${retroBtn('▶ Play on itch.io', pt.itchUrl)}
                 ${retroBtn('⬇ Download (Windows)', pt.downloadUrl, true)}
             </div>
+            ${renderReflection(pt.reflection)}
         </div>
     `;
 }
@@ -164,6 +184,7 @@ function renderRetroBoardGames() {
         <div class="project-item">
             <h4>${bg.title}</h4>
             ${renderDescription(bg.description)}
+            ${renderReflection(bg.reflection)}
             <br>
             ${imgGrid(bg.images, 3, 3, 'Photo')}
             <div style="margin-top:8px;">
@@ -181,6 +202,7 @@ function renderRetroScenes() {
         <div class="project-item">
             <h4>${scene.title}</h4>
             ${renderDescription(scene.description)}
+            ${renderReflection(scene.reflection)}
             <br>
             ${scene.sketchfabId
         ? `<iframe src="https://sketchfab.com/models/${scene.sketchfabId}/embed"
@@ -204,6 +226,7 @@ function renderRetroAnimations() {
         <div class="project-item">
             <h4>${anim.title}</h4>
             ${renderDescription(anim.description)}
+            ${renderReflection(anim.reflection)}
             <br>
             <iframe width="100%" height="260"
                     src="https://www.youtube.com/embed/${anim.youtubeId}"
@@ -236,6 +259,7 @@ function renderModern() {
                     <div class="modern-card">
                         <h3>${proj.title}</h3>
                         ${renderDescription(proj.description, true)}
+                        ${renderReflection(proj.reflection, true)}
                         ${modernImgs(proj.images)}
                         <div style="margin-top:10px;">
                             ${modernBtn('GitHub ↗', proj.github)}
@@ -249,6 +273,7 @@ function renderModern() {
                 <div class="modern-card">
                     <h3>${p.caustics.title}</h3>
                     ${renderDescription(p.caustics.description, true)}
+                    ${renderReflection(p.caustics.reflection, true)}
                     ${modernImgs(p.caustics.images)}
                     <div style="margin-top:10px;">
                         ${modernBtn('GitHub ↗', p.caustics.github)}
@@ -266,6 +291,7 @@ function renderModern() {
                 <div class="modern-card">
                     <h3>${p.purpleTeam.title}</h3>
                     ${renderDescription(p.purpleTeam.description, true)}
+                    ${renderReflection(p.purpleTeam.reflection, true)}
                     ${modernImgs(p.purpleTeam.images)}
                     <div style="margin-top:10px;">
                         ${modernBtn('▶ Play on itch.io ↗', p.purpleTeam.itchUrl)}
@@ -280,6 +306,7 @@ function renderModern() {
                     <div class="modern-card">
                         <h3>${bg.title}</h3>
                         ${renderDescription(bg.description, true)}
+                        ${renderReflection(bg.reflection, true)}
                         ${modernImgs(bg.images)}
                         <div style="margin-top:10px;">
                             ${modernBtn('📄 Rules', bg.rulesUrl)}
@@ -300,6 +327,7 @@ function renderModern() {
                     <div class="modern-card">
                         <h3>${scene.title}</h3>
                         ${renderDescription(scene.description, true)}
+                        ${renderReflection(scene.reflection, true)}
                         ${scene.sketchfabId
         ? `<iframe src="https://sketchfab.com/models/${scene.sketchfabId}/embed"
                                        width="100%" height="220" frameborder="0"
@@ -321,6 +349,7 @@ function renderModern() {
                     <div class="modern-card">
                         <h3>${anim.title}</h3>
                         ${renderDescription(anim.description, true)}
+                        ${renderReflection(anim.reflection, true)}
                         <div style="margin-top:10px;">
                             ${modernBtn('Watch on YouTube ↗', `https://www.youtube.com/watch?v=${anim.youtubeId}`)}
                         </div>
