@@ -40,8 +40,8 @@ const PORTFOLIO = {
 
         "While I was growing up, it was hard to find me without a game in my hands. I was always reading about " +
         "upcoming releases, watching development coverage, and digging into how games changed from their early " +
-        "builds to what shipped. I even cut a DS out of a magazine that I pretended to play on before I had one. That " +
-        "passion has shifted from viewing games as a player into developer as I learn everything I can about " +
+        "builds to what shipped. I even cut a DS out of a magazine that I pretended to play on before I had one." +
+        " That passion has shifted from viewing games as a player into developer as I learn everything I can about " +
         "actually making games.",
 
         "Outside of playing and making games, I love spending my free time snowboarding, mountain biking, " +
@@ -81,7 +81,23 @@ const PORTFOLIO = {
 
     caustics: {
         title: "Water Caustics and God Rays",
-        description: "A four-person collaborative project to simulate water caustics and volumetric god rays in Unity. The core problem was getting a caustic light pattern to paint itself dynamically across every surface in the scene. My teammate and I whiteboarded our way to a solution using 3D Voronoi noise — each frame we take a 2D slice through a 3D noise cube to generate a shifting caustic texture, which we then fed into Unity's decal system so it could be projected across any object within a defined volume. Once the system was working, I took ownership of the scene itself: sourcing and placing coral, treasure chests, sandcastles, SpongeBob houses, and an old-timey diver helmet across the sandy floor to give the underwater setting somewhere interesting to cast light.",
+        description: [
+            "This is a collaborative project with three teammates that simulates water caustics and volumetric " +
+            "god rays in Unity. One other teammate and I were responsible for the caustics side of the project. " +
+            "Since we had done a previous assignment on different procedural noise generation techniques for the " +
+            "same class, we decided to expand on that lesson by using Voronoi noise as the basis for our pattern.",
+
+            "Our approach centered on generating a 3D cube of Voronoi noise and sampling a 2D slice from it each " +
+            "frame to use as a shifting texture. My partner handled the programming side of our methodology, while " +
+            "I was responsible for integrating it into Unity. My biggest challenge was getting the material to " +
+            "project onto every object in the scene, which I solved by discovering Unity's decal system, using " +
+            "it to define a volume that would apply the caustic material to any object inside it.",
+
+            "Once our caustics and our other teammates' god rays were working, I assembled the scene for our final " +
+            "render. I populated it with coral, a treasure chest, a sandcastle, SpongeBob houses, and an old-timey " +
+            "diver helmet to show how the caustics interacted dynamically with different objects the way real " +
+            "underwater light would.",
+        ],
         images: [
             { src: "images/caustics/temp.jpg", alt: "Caustics 1" },
             { src: "images/caustics/temp.jpg", alt: "Caustics 2" },

@@ -7,7 +7,6 @@
 
 function imgGrid(images, cols = 2, placeholderCount = 2, placeholderLabel = "Screenshot") {
     if (!images || images.length === 0) {
-        // Show placeholder boxes
         const boxes = Array.from({ length: placeholderCount }, (_, i) =>
             `<div class="img-placeholder" style="height:120px;">${placeholderLabel} ${i + 1}</div>`
         ).join('');
@@ -39,6 +38,18 @@ function modernBtn(label, href, download = false) {
     return `<a href="${href}" target="${download ? '_self' : '_blank'}" ${download ? 'download' : ''}
                style="display:inline-block;margin:4px 6px 0 0;padding:5px 12px;background:#4a9eff;
                       color:white;border-radius:4px;font-size:12px;text-decoration:none;">${label}</a>`;
+}
+
+// Renders a description that is either a string or an array of strings
+function renderDescription(description, modern = false) {
+    if (Array.isArray(description)) {
+        return description.map(para =>
+            modern
+                ? `<p style="margin-bottom:10px;">${para}</p>`
+                : `<p style="margin-bottom:8px;">${para}</p>`
+        ).join('');
+    }
+    return `<p>${description}</p>`;
 }
 
 // ── RETRO RENDERS ─────────────────────────────────────────────
@@ -100,7 +111,7 @@ function renderRetroCpp() {
     el.innerHTML = PORTFOLIO.cpp.map(proj => `
         <div class="project-item">
             <h4>${proj.title}</h4>
-            <p>${proj.description}</p>
+            ${renderDescription(proj.description)}
             <br>
             ${proj.youtubeId ? `<iframe width="100%" height="220" src="https://www.youtube.com/embed/${proj.youtubeId}" frameborder="0" allowfullscreen style="margin:8px 0;"></iframe>` : ''}
             ${imgGrid(proj.images, 2, 2, 'Screenshot')}
@@ -118,7 +129,7 @@ function renderRetroCaustics() {
     el.innerHTML = `
         <div class="project-item">
             <h4>${c.title}</h4>
-            <p>${c.description}</p>
+            ${renderDescription(c.description)}
             <br>
             ${imgGrid(c.images, 2, 4, 'Caustics Screenshot')}
             <div style="margin-top:8px;">
@@ -135,7 +146,7 @@ function renderRetroPurpleTeam() {
     el.innerHTML = `
         <div class="project-item">
             <h4>${pt.title}</h4>
-            <p>${pt.description}</p>
+            ${renderDescription(pt.description)}
             <br>
             ${imgGrid(pt.images, 2, 4, 'Screenshot')}
             <div style="margin-top:8px;">
@@ -152,7 +163,7 @@ function renderRetroBoardGames() {
     el.innerHTML = PORTFOLIO.boardGames.map(bg => `
         <div class="project-item">
             <h4>${bg.title}</h4>
-            <p>${bg.description}</p>
+            ${renderDescription(bg.description)}
             <br>
             ${imgGrid(bg.images, 3, 3, 'Photo')}
             <div style="margin-top:8px;">
@@ -169,7 +180,7 @@ function renderRetroScenes() {
     el.innerHTML = PORTFOLIO.scenes.map(scene => `
         <div class="project-item">
             <h4>${scene.title}</h4>
-            <p>${scene.description}</p>
+            ${renderDescription(scene.description)}
             <br>
             ${scene.sketchfabId
         ? `<iframe src="https://sketchfab.com/models/${scene.sketchfabId}/embed"
@@ -192,7 +203,7 @@ function renderRetroAnimations() {
     el.innerHTML = PORTFOLIO.animations.map(anim => `
         <div class="project-item">
             <h4>${anim.title}</h4>
-            <p>${anim.description}</p>
+            ${renderDescription(anim.description)}
             <br>
             <iframe width="100%" height="260"
                     src="https://www.youtube.com/embed/${anim.youtubeId}"
@@ -224,7 +235,7 @@ function renderModern() {
                 ${p.cpp.map(proj => `
                     <div class="modern-card">
                         <h3>${proj.title}</h3>
-                        <p>${proj.description}</p>
+                        ${renderDescription(proj.description, true)}
                         ${modernImgs(proj.images)}
                         <div style="margin-top:10px;">
                             ${modernBtn('GitHub ↗', proj.github)}
@@ -237,7 +248,7 @@ function renderModern() {
             <div class="modern-grid">
                 <div class="modern-card">
                     <h3>${p.caustics.title}</h3>
-                    <p>${p.caustics.description}</p>
+                    ${renderDescription(p.caustics.description, true)}
                     ${modernImgs(p.caustics.images)}
                     <div style="margin-top:10px;">
                         ${modernBtn('GitHub ↗', p.caustics.github)}
@@ -254,7 +265,7 @@ function renderModern() {
             <div class="modern-grid">
                 <div class="modern-card">
                     <h3>${p.purpleTeam.title}</h3>
-                    <p>${p.purpleTeam.description}</p>
+                    ${renderDescription(p.purpleTeam.description, true)}
                     ${modernImgs(p.purpleTeam.images)}
                     <div style="margin-top:10px;">
                         ${modernBtn('▶ Play on itch.io ↗', p.purpleTeam.itchUrl)}
@@ -268,7 +279,7 @@ function renderModern() {
                 ${p.boardGames.map(bg => `
                     <div class="modern-card">
                         <h3>${bg.title}</h3>
-                        <p>${bg.description}</p>
+                        ${renderDescription(bg.description, true)}
                         ${modernImgs(bg.images)}
                         <div style="margin-top:10px;">
                             ${modernBtn('📄 Rules', bg.rulesUrl)}
@@ -288,7 +299,7 @@ function renderModern() {
                 ${p.scenes.map(scene => `
                     <div class="modern-card">
                         <h3>${scene.title}</h3>
-                        <p>${scene.description}</p>
+                        ${renderDescription(scene.description, true)}
                         ${scene.sketchfabId
         ? `<iframe src="https://sketchfab.com/models/${scene.sketchfabId}/embed"
                                        width="100%" height="220" frameborder="0"
@@ -309,7 +320,7 @@ function renderModern() {
                 ${p.animations.map(anim => `
                     <div class="modern-card">
                         <h3>${anim.title}</h3>
-                        <p>${anim.description}</p>
+                        ${renderDescription(anim.description, true)}
                         <div style="margin-top:10px;">
                             ${modernBtn('Watch on YouTube ↗', `https://www.youtube.com/watch?v=${anim.youtubeId}`)}
                         </div>
