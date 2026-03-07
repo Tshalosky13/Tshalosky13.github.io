@@ -3,6 +3,36 @@
 //  You should never need to edit this file.
 // ============================================================
 
+// ── Lightbox ─────────────────────────────────────────────────
+
+function openLightbox(src, alt) {
+    const existing = document.getElementById('lightbox-overlay');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'lightbox-overlay';
+    overlay.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.85); z-index: 99999;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+    `;
+
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = alt || '';
+    img.style.cssText = `
+        max-width: 90vw; max-height: 90vh;
+        object-fit: contain;
+        border: 3px solid #fff;
+        box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    `;
+
+    overlay.appendChild(img);
+    overlay.addEventListener('click', () => overlay.remove());
+    document.body.appendChild(overlay);
+}
+
 // ── Helpers ──────────────────────────────────────────────────
 
 function imgGrid(images, cols = 2, placeholderCount = 2, placeholderLabel = "Screenshot") {
@@ -13,7 +43,9 @@ function imgGrid(images, cols = 2, placeholderCount = 2, placeholderLabel = "Scr
         return `<div class="img-grid-${cols}">${boxes}</div>`;
     }
     const imgs = images.map(img =>
-        `<img src="${img.src}" alt="${img.alt || ''}" style="width:100%;height:120px;object-fit:cover;border:1px solid #999;">`
+        `<img src="${img.src}" alt="${img.alt || ''}"
+              onclick="openLightbox('${img.src}', '${(img.alt || '').replace(/'/g, "\\'")}')"
+              style="width:100%;height:120px;object-fit:cover;border:1px solid #999;cursor:pointer;">`
     ).join('');
     return `<div class="img-grid-${cols}">${imgs}</div>`;
 }
@@ -29,7 +61,9 @@ function retroBtn(label, href, download = false) {
 function modernImgs(images) {
     if (!images || images.length === 0) return '';
     return `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin:12px 0;">
-        ${images.map(img => `<img src="${img.src}" alt="${img.alt||''}" style="width:100%;height:110px;object-fit:cover;border-radius:4px;">`).join('')}
+        ${images.map(img => `<img src="${img.src}" alt="${img.alt||''}"
+            onclick="openLightbox('${img.src}', '${(img.alt || '').replace(/'/g, "\\'")}')"
+            style="width:100%;height:110px;object-fit:cover;border-radius:4px;cursor:pointer;">`).join('')}
     </div>`;
 }
 

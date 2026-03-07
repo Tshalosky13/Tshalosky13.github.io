@@ -168,7 +168,7 @@ const PORTFOLIO = {
             { src: "images/caustics/temp.jpg", alt: "Caustics 3" },
             { src: "images/caustics/temp.jpg", alt: "Caustics 4" },
         ],
-        github: "https://github.com/raihansyahdean/Water-Light-Graphics-Project",
+        github: "https://github.com/Tshalosky13/Water-Light-Graphics-Project",
     },
 
     // ── GAME DESIGN ──────────────────────────────────────────
