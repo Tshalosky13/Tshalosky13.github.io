@@ -8,7 +8,7 @@ const PORTFOLIO = {
     // ── PERSONAL INFO ────────────────────────────────────────
     name: "Thomas Peregrine Shalosky",
     title: "Game Developer | Technical Artist | Graphics Programmer",
-    photo: "images/temp.jpg",   // your headshot
+    photo: "images/bio/profile.jpg",
     email: "Shalosky@usc.edu",
     linkedin: "https://www.linkedin.com/in/thomas-shalosky/",
     github: "https://github.com/Tshalosky13",
@@ -230,9 +230,13 @@ const PORTFOLIO = {
                 "points at the end of the game.",
             ],
             images: [
-                { src: "images/board_games/undead/temp.jpg", alt: "Undead Dash Photo 1" },
-                { src: "images/board_games/undead/temp.jpg", alt: "Undead Dash Photo 2" },
-                { src: "images/board_games/undead/temp.jpg", alt: "Undead Dash Photo 3" },
+                { src: "images/board_games/undead/box1.jpg", alt: "Undead Dash Box" },
+                { src: "images/board_games/undead/gameState1.jpg", alt: "Undead Dash Game State" },
+                { src: "images/board_games/undead/contents.jpg", alt: "Undead Dash Contents" },
+                { src: "images/board_games/undead/ends.jpg", alt: "Undead Dash Board End Pieces" },
+                { src: "images/board_games/undead/cardsAll.jpg", alt: "Undead Dash Player Cards" },
+                { src: "images/board_games/undead/boardDrawn.jpg", alt: "Undead Dash Drawn Board Pieces" },
+
             ],
             rulesUrl: "pdfs/UndeadRules.pdf",     // or "" to hide button
             journalUrl: "pdfs/UndeadPhotoJournal.pdf", // or "" to hide button
@@ -259,9 +263,12 @@ const PORTFOLIO = {
                 "in a game.",
             ],
             images: [
-                { src: "images/board_games/love_war/temp.jpg", alt: "Love and War Photo 1" },
-                { src: "images/board_games/love_war/temp.jpg", alt: "Love and War Photo 2" },
-                { src: "images/board_games/love_war/temp.jpg", alt: "Love and War Photo 3" },
+                { src: "images/board_games/love_war/logo.jpg", alt: "Love and War Logo" },
+                { src: "images/board_games/love_war/boardPrePlay.jpg", alt: "Love and War Board Pre Play" },
+                { src: "images/board_games/love_war/gameState.jpg", alt: "Love and War Game State" },
+                { src: "images/board_games/love_war/tilesNPC.jpg", alt: "Love and War NPC Tiles" },
+                { src: "images/board_games/love_war/pawns1.jpg", alt: "Love and War Pawns and Game Pieces" },
+                { src: "images/board_games/love_war/lovers.jpg", alt: "Love and War Love Interests" },
             ],
             rulesUrl: "pdfs/LoveWarRules.pdf",
             journalUrl: "pdfs/LoveWarPhotoJournal.pdf",
@@ -286,9 +293,12 @@ const PORTFOLIO = {
                 "rules, and refining the game through each round of playtesting with my team.",
             ],
             images: [
-                { src: "images/board_games/museum/temp.jpg", alt: "Museum Mischief Photo 1" },
-                { src: "images/board_games/museum/temp.jpg", alt: "Museum Mischief Photo 2" },
-                { src: "images/board_games/museum/temp.jpg", alt: "Museum Mischief Photo 3" },
+                { src: "images/board_games/museum/contents.jpg", alt: "Museum Mischief Game Contents" },
+                { src: "images/board_games/museum/playReady.jpg", alt: "Museum Mischief Play Ready Game State" },
+                { src: "images/board_games/museum/solutions.jpg", alt: "Museum Mischief Solution Cards" },
+                { src: "images/board_games/museum/pickG.jpg", alt: "Museum Mischief Green Picker Cards" },
+                { src: "images/board_games/museum/fairness.jpg", alt: "Museum Mischief Fairness Cards" },
+                { src: "images/board_games/museum/directG.jpg", alt: "Museum Mischief Green Director Cards" },
             ],
             rulesUrl: "pdfs/MuseumRules.pdf",
             journalUrl: "pdfs/MuseumPhotoJournal.pdf",
