@@ -328,8 +328,12 @@ const PORTFOLIO = {
             ],
             sketchfabId: "",  // paste model ID from sketchfab embed URL, e.g. "abc123def456"
             images: [
-                { src: "images/3d_scenes/bedroom/temp.jpg", alt: "Bedroom Render 1" },
-                { src: "images/3d_scenes/bedroom/temp.jpg", alt: "Bedroom Render 2" },
+                { src: "images/3d_scenes/bedroom/Room1.jpg", alt: "Bedroom Render 1" },
+                { src: "images/3d_scenes/bedroom/Room9.png", alt: "Bedroom Render 2" },
+                { src: "images/3d_scenes/bedroom/Room10.jpg", alt: "Bedroom Render 3" },
+                { src: "images/3d_scenes/bedroom/Room8.jpg", alt: "Bedroom Render 4" },
+                { src: "images/3d_scenes/bedroom/Room18.jpg", alt: "Bedroom Render 5" },
+                { src: "images/3d_scenes/bedroom/Room15.jpg", alt: "Bedroom Render 6" },
             ],
             downloadUrl: "", // or "downloads/scene1.zip"
         },
@@ -353,8 +357,12 @@ const PORTFOLIO = {
             ],
             sketchfabId: "",
             images: [
-                { src: "images/3d_scenes/city/temp.jpg", alt: "Ski Town Render 1" },
-                { src: "images/3d_scenes/city/temp.jpg", alt: "Ski Town Render 2" },
+                { src: "images/3d_scenes/city/Render39.jpg", alt: "Ski Town Render 1" },
+                { src: "images/3d_scenes/city/Render33.jpg", alt: "Ski Town Render 2" },
+                { src: "images/3d_scenes/city/Render20.jpg", alt: "Ski Town Render 3" },
+                { src: "images/3d_scenes/city/Render18.jpg", alt: "Ski Town Render 4" },
+                { src: "images/3d_scenes/city/Render29.jpg", alt: "Ski Town Render 5" },
+                { src: "images/3d_scenes/city/Render36.jpg", alt: "Ski Town Render 6" },
             ],
             downloadUrl: "",
         },
