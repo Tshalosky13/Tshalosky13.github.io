@@ -28,7 +28,10 @@ const PORTFOLIO = {
             { label: "Game Design", detail: "Video and board game projects" },
             { label: "3D Art", detail: "Modeled scenes and animations" },
         ],
-        tip: "Tip: Drag and resize windows just like a real desktop! Open the Start menu to access Settings and Music.",
+        tip: "Tip: Drag and resize windows just like a real desktop! Open the Start menu to access Settings and " +
+            "Music. Click on pictures to make them fullscreen.",
+
+
         credits: "Icons sourced from https://win98icons.alexmeub.com/.",
     },
 
@@ -163,10 +166,10 @@ const PORTFOLIO = {
             "underwater light would.",
         ],
         images: [
-            { src: "images/caustics/temp.jpg", alt: "Caustics 1" },
-            { src: "images/caustics/temp.jpg", alt: "Caustics 2" },
-            { src: "images/caustics/temp.jpg", alt: "Caustics 3" },
-            { src: "images/caustics/temp.jpg", alt: "Caustics 4" },
+            { src: "images/caustics/scene1.png", alt: "Caustics 1" },
+            { src: "images/caustics/scene3.png", alt: "Caustics 2" },
+            { src: "images/caustics/scene4.png", alt: "Caustics 3" },
+            { src: "images/caustics/scene5.png", alt: "Caustics 4" },
         ],
         github: "https://github.com/Tshalosky13/Water-Light-Graphics-Project",
     },
@@ -182,10 +185,11 @@ const PORTFOLIO = {
             "For the abilities I designed the gameplay of both offensive and defensive pickups around cybersecurity concepts, things like a DDoS that covers your opponent's screen, malware that reverses their controls, and a firewall that places a physical wall in the level. The art direction was where I had the most fun, landing on a Windows 95 aesthetic for the menus and UI to match the cybersecurity theme and adding graffiti style typography to give it a unique spin. The scope ended up being too large for our team and timeline, but it was a great lesson in making hard calls under a deadline and shipping something even when it is not where you wanted it to be.",
         ],
         images: [
-            { src: "images/purple_team/temp.jpg", alt: "Purple Team Screenshot 1" },
-            { src: "images/purple_team/temp.jpg", alt: "Purple Team Screenshot 2" },
-            { src: "images/purple_team/temp.jpg", alt: "Purple Team Screenshot 3" },
-            { src: "images/purple_team/temp.jpg", alt: "Purple Team Screenshot 4" },
+            { src: "images/purple_team/cover.png", alt: "Purple Team Cover" },
+            { src: "images/purple_team/menu.png", alt: "Purple Team Menu" },
+            { src: "images/purple_team/map1.png", alt: "Purple Team Map 1" },
+            { src: "images/purple_team/tower.png", alt: "Purple Team Server" },
+            { src: "images/purple_team/map2.png", alt: "Purple Team Map2" },
         ],
         itchUrl: "https://tshalosky13.itch.io/purple-team",
         downloadUrl: "downloadables/Purple Team.zip",  // or "" to hide the button
