@@ -86,15 +86,6 @@ body.modern-mode .particles {
     object-fit: contain;
 }
 
-/* Holiday icon decorations */
-body.theme-halloween    .icon-image { background: #ff8c42; }
-body.theme-thanksgiving .icon-image { background: #d4a574; }
-body.theme-winter       .icon-image { background: #b8d4ff; }
-body.theme-valentine    .icon-image { background: #ffb8d4; }
-body.theme-stpatrick    .icon-image { background: #90ee90; }
-body.theme-birthday     .icon-image { background: #ffd700; }
-body.theme-july4th      .icon-image { background: #ff8888; }
-
 .icon-label {
     color: white;
     font-size: 11px;

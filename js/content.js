@@ -24,7 +24,7 @@ const PORTFOLIO = {
             "If you'd like a more streamlined layout, you can switch to the modern view in the taskbar. " +
             "Have fun looking around!",
         bullets: [
-            { label: "Graphics Programming / Technical Art", detail: "C++ graphics projects and Unity shaders" },
+            { label: "Graphics Programming / Technical Art", detail: "C++ graphics projects and Engine VFX" },
             { label: "Game Design", detail: "Video and board game projects" },
             { label: "3D Art", detail: "Modeled scenes and animations" },
         ],
@@ -377,6 +377,25 @@ const PORTFOLIO = {
         {
             title: "Brand New Broom",
             description: [
+                "Brand New Broom is a 3D animation I made during my senior year at UNCW for a fantasy inspired " +
+                "rigging assignment. It follows a kid wizard in wizard school trying to make his skateboard fly " +
+                "on the end of a broom. The aesthetic is arts and crafts, everything is meant to look like it " +
+                "was made from clay, cardboard, or yarn, with the skateboard modeled as a popsicle stick and " +
+                "the character's hair made using a MASH system to simulate sewn thread.",
+
+                "My process began with a loose storyboard and a sketchbook page filled with small world " +
+                "building and my initial idea of the character. I then got into my rhythm of modeling, " +
+                "texturing, rigging, and animating before rendering it all out. I lastly did my compositing " +
+                "in After Effects, where I also added a CRT filter for some added flair. Compared to my " +
+                "earlier fox animation this one has a more developed story, more refined animation, and a " +
+                "clearer sense of direction. Modeled and animated in Maya, textured in Substance Painter, " +
+                "composited in After Effects.",
+            ],
+            youtubeId: "zZGdN4yVD6E",
+        },
+        {
+            title: "A Fox and His Ball",
+            description: [
                 "A Fox and His Ball is a 3D animation I made during my senior year at UNCW for an assignment " +
                 "centered around a bioluminescent animal. The story follows a stuffed fox in a yellow room " +
                 "who is jumping around playing with a tennis ball, only to knock it into a dark cracked open " +
@@ -391,25 +410,6 @@ const PORTFOLIO = {
                 "Getting those small idle movements to feel natural was harder than I expected and more " +
                 "satisfying to land than any of the bigger moments. Modeled and animated in Maya " +
                 "textured in Substance Painter, and composited in After Effects.",
-            ],
-            youtubeId: "zZGdN4yVD6E",
-        },
-        {
-            title: "A Fox and His Ball",
-            description: [
-                "Brand New Broom is a 3D animation I made during my senior year at UNCW for a fantasy inspired " +
-                "rigging assignment. It follows a kid wizard in wizard school trying to make his skateboard fly " +
-                "on the end of a broom. The aesthetic is arts and crafts, everything is meant to look like it " +
-                "was made from clay, cardboard, or yarn, with the skateboard modeled as a popsicle stick and " +
-                "the character's hair made using a MASH system to simulate sewn thread.",
-
-                "My process began with a loose storyboard and a sketchbook page filled with small world " +
-                "building and my initial idea of the character. I then got into my rhythm of modeling, " +
-                "texturing, rigging, and animating before rendering it all out. I lastly did my compositing " +
-                "in After Effects, where I also added a CRT filter for some added flair. Compared to my " +
-                "earlier fox animation this one has a more developed story, more refined animation, and a " +
-                "clearer sense of direction. Modeled and animated in Maya, textured in Substance Painter, " +
-                "composited in After Effects.",
             ],
             youtubeId: "YYwnx12hpyw",
         },

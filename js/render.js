@@ -302,7 +302,7 @@ function renderModern() {
                 `).join('')}
             </div>
 
-            <h3 style="margin-top:24px;font-size:20px;color:#aaa;">Unity Graphics Project</h3>
+            <h3 style="margin-top:24px;font-size:20px;color:#aaa;">Engine VFX</h3>
             <div class="modern-grid">
                 <div class="modern-card">
                     <h3>${p.caustics.title}</h3>
